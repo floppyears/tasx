@@ -1,6 +1,7 @@
 # intellij idea
 *.iml
 .idea/*
+target/*
 
 # mac
 **/.DS_Store
