@@ -9,9 +9,9 @@ class User {
 
     static hasMany = [tasks = Task];
 
-    protected String userName;
-    protected String emailAddress;
-    protected String passwordHash;
+    private String userName;
+    private String emailAddress;
+    private String passwordHash;
 
     public User(String name, String email, String password) {
         userName = name;
