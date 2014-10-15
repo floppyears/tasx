@@ -1,5 +1,7 @@
 package edu.oregonstate.mist;
 
+import java.security.MessageDigest;
+
 class User {
 
     static constraints = {
@@ -37,8 +39,9 @@ class User {
         return (hash(password) == passwordHash);
     }
 
-    /* TODO: use a real hash function */
     private String hash(String clearText) {
-        return clearText;
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(clearText.getBytes());
+        return new BigInteger(1, md.digest()).toString(16); // convert byte[] to BigInteger to hex String
     }
 }
