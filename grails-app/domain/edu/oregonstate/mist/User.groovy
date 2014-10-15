@@ -7,7 +7,7 @@ class User {
     static constraints = {
     }
 
-    static hasMany = [tasks = Task];
+    static hasMany = [tasks: Task];
 
     private String userName;
     private String emailAddress;
