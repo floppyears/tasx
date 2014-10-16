@@ -31,7 +31,7 @@ class User {
         return (hash(password) == passwordHash);
     }
 
-    private String hash(String clearText) {
+    private static String hash(String clearText) {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         md.update(clearText.getBytes());
         return new BigInteger(1, md.digest()).toString(16); // convert byte[] to BigInteger to hex String
