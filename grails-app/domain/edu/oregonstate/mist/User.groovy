@@ -10,25 +10,17 @@ class User {
     static hasMany = [tasks: Task];
 
     private String userName;
-    private String emailAddress;
+    String email;
     private String passwordHash;
 
     public User(String name, String email, String password) {
         userName = name;
-        emailAddress = email;
+        this.email = email;
         passwordHash = hash(password);
     }
 
     public String getName() {
         return userName;
-    }
-
-    public String getEmail() {
-        return emailAddress;
-    }
-
-    public void setEmail(String email) {
-        emailAddress = email;
     }
 
     public void setPassword(String password) {
