@@ -39,6 +39,11 @@ class User {
         BigInteger digestBigInteger = new BigInteger(1, digestByteArray)
         String     digestString = digestBigInteger.toString(16)
 
+        final int SHA256SUM_LENGTH = 64
+        for (int padding = SHA256SUM_LENGTH - digestString.length(); padding > 0; --padding) {
+            digestString = "0" + digestString // prepend leading zeros to checksum
+        }
+
         return digestString
     }
 
