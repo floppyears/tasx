@@ -70,15 +70,18 @@ class Interval {
     }
 
     public Boolean overlaps(Interval that) {
+        Boolean thisIsInterval = this.isInterval()
+        Boolean thatIsInterval = that.isInterval()
+
         if (this.isNull() || that.isNull()) {
             return false
-        } else if (!this.isInterval() && !that.isInterval()) {
+        } else if (!thisIsInterval && !thatIsInterval) {
             return ((this.getAt() == that.getAt()) && (this.getAt() != null))
-        } else if (this.isInterval() && !that.isInterval()) {
+        } else if (thisIsInterval && !thatIsInterval) {
             return this.contains(that.getAt())
-        } else if (!this.isInterval() && that.isInterval()) {
+        } else if (!thisIsInterval && thatIsInterval) {
             return that.contains(this.getAt())
-        } else { // this.isInterval() && that.isInterval()
+        } else { // thisIsInterval && thatIsInterval
             return (this.contains(that.getFrom()) || this.contains(that.getTo()))
         }
     }
