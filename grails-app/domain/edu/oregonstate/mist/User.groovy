@@ -31,9 +31,18 @@ class User {
         return (hash(password) == passwordHash)
     }
 
-    private static String hash(String clearText) {
+    public static String sha256sum(String message) {
         MessageDigest md = MessageDigest.getInstance("SHA-256")
-        md.update(clearText.getBytes())
-        return new BigInteger(1, md.digest()).toString(16) // convert byte[] to BigInteger to hex String
+        md.update(message.getBytes())
+
+        byte[]     digestByteArray = md.digest()
+        BigInteger digestBigInteger = new BigInteger(1, digestByteArray)
+        String     digestString = digestBigInteger.toString(16)
+
+        return digestString
+    }
+
+    private static String hash(String clearText) {
+        return sha256sum(clearText)
     }
 }
