@@ -1,6 +1,6 @@
 package edu.oregonstate.mist
 
-class Schedule {
+class Interval {
 
     static constraints = {
     }
@@ -8,13 +8,13 @@ class Schedule {
     private Calendar fromInstant
     private Calendar toInstant
 
-    public Schedule(Calendar from, Calendar to) {
+    public Interval(Calendar from, Calendar to) {
         fromInstant = from
         toInstant = to
     }
 
-    public Schedule() {
-        this.Schedule(null, null)
+    public Interval() {
+        this.Interval(null, null)
     }
 
     public void setAt(Calendar at) { // time: -----|----->
@@ -73,7 +73,7 @@ class Schedule {
         }
     }
 
-    public Boolean overlaps(Schedule that) {
+    public Boolean overlaps(Interval that) {
         if (this.isNull() || that.isNull()) {
             return false
         } else if (!this.isRange() && !that.isRange()) {

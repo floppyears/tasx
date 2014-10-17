@@ -10,7 +10,7 @@ class Task {
     private static enum Status { TODO, DONE, CANCELLED, DELETED }
 
     String description
-    private Schedule schedule
+    private Interval schedule
     Integer priority
     private Status status
 
