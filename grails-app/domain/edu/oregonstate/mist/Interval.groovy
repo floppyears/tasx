@@ -5,51 +5,47 @@ class Interval {
     static constraints = {
     }
 
-    private Calendar fromInstant
-    private Calendar toInstant
+    private Calendar from
+    private Calendar to
 
     public Interval(Calendar from, Calendar to) {
-        fromInstant = from
-        toInstant = to
+        this.setInterval(from, to)
     }
 
     public Interval() {
-        this.Interval(null, null)
+        this.setInterval(null, null)
     }
 
     public void setAt(Calendar at) { // time: -----|----->
-        fromInstant = at
-        toInstant = at
+        this.setInterval(at, at)
     }
 
     public void setUntil(Calendar to) { // time: =====|----->
-        fromInstant = null
-        toInstant = to
+        this.setInterval(null, to)
     }
 
     public void setAfter(Calendar from) { // time: -----|=====>
-        fromInstant = from
-        toInstant = null
+        this.setInterval(from, null)
     }
 
-    public void setBetween(Calendar from, Calendar to) { // time: ---|===|--->
-        fromInstant = from
-        toInstant = to
+    public void setInterval(Calendar from, Calendar to) { // time: ---|===|--->
+        this.from = from
+        this.to = to
     }
 
     public Calendar getFrom() {
-        return fromInstant
+        return from
     }
 
     public Calendar getTo() {
-        return toInstant
+        return to
     }
 
     public Calendar getAt() {
         return this.getTo()
     }
 
-    public Boolean isRange() {
+    public Boolean isInterval() {
         return (this.getFrom() != this.getTo())
     }
 
@@ -60,9 +56,9 @@ class Interval {
     public Boolean contains(Calendar instant) {
         if (instant == null) {
             return false
-        } else if (!this.isRange()) {
+        } else if (!this.isInterval()) {
             return (instant == this.getAt())
-        } else { // this.isRange()
+        } else { // this.isInterval()
             if (this.getFrom() == null) {
                 return (this.getTo().compareTo(instant) >= 0)
             } else if (this.getTo() == null) {
@@ -76,13 +72,13 @@ class Interval {
     public Boolean overlaps(Interval that) {
         if (this.isNull() || that.isNull()) {
             return false
-        } else if (!this.isRange() && !that.isRange()) {
+        } else if (!this.isInterval() && !that.isInterval()) {
             return ((this.getAt() == that.getAt()) && (this.getAt() != null))
-        } else if (this.isRange() && !that.isRange()) {
+        } else if (this.isInterval() && !that.isInterval()) {
             return this.contains(that.getAt())
-        } else if (!this.isRange() && that.isRange()) {
+        } else if (!this.isInterval() && that.isInterval()) {
             return that.contains(this.getAt())
-        } else { // this.isRage() && that.isRange()
+        } else { // this.isInterval() && that.isInterval()
             return (this.contains(that.getFrom()) || this.contains(that.getTo()))
         }
     }
