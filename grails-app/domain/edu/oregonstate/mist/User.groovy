@@ -5,12 +5,15 @@ import java.security.MessageDigest
 class User {
 
     static constraints = {
-        // password has at least 10 characters and at least 1 digit
-        passwordTemp minSize: 10, matches: ".*[0-9].*"
-
-        // after validation, hash and store password and overwrite temporary value
-        passwordHash = hash(passwordTemp)
-        passwordTemp = null
+        passwordTemp(
+                [ minSize: 10,                          // password has at least 10 characters
+                  matches: ".*[0-9].*",                 // and at least 1 digit
+                  validator: {
+                      passwordHash = hash(passwordTemp) // after validation, store password hash
+                      passwordTemp = null               // then overwrite temporary
+                  }
+                ]
+        )
     }
 
     static hasMany = [tasks: Task]
