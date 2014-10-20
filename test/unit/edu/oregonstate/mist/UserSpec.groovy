@@ -1,0 +1,28 @@
+package edu.oregonstate.mist
+
+import grails.test.mixin.TestFor
+import spock.lang.Specification
+
+/**
+ * See the API for {@link grails.test.mixin.domain.DomainClassUnitTestMixin} for usage instructions
+ */
+@TestFor(User)
+class UserSpec extends Specification {
+
+    def setup() {
+    }
+
+    def cleanup() {
+    }
+
+    void "calculate sha256sum string from string"() {
+        expect:
+        User.sha256sum(message) == digest
+
+        where:
+        message                                       | digest
+        "hello world"                                 | "b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9"
+        "the quick brown fox jumps over the lazy dog" | "05c6e08f1d9fdafa03147fcb8f82f124c76d2f70e3d989dc8aadb5e7d7450bec"
+        "password"                                    | "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
+    }
+}
