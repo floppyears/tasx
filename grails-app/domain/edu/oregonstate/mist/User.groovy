@@ -16,7 +16,7 @@ class User {
     public User(String name, String email, String password) {
         userName = name
         this.email = email
-        passwordHash = hash(password)
+        this.setPassword(password)
     }
 
     public String getName() {
