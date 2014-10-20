@@ -5,12 +5,19 @@ import java.security.MessageDigest
 class User {
 
     static constraints = {
+        // password has at least 10 characters and at least 1 digit
+        passwordTemp minSize: 10, matches: ".*[0-9].*"
+
+        // after validation, hash and store password and overwrite temporary value
+        passwordHash = hash(passwordTemp)
+        passwordTemp = null
     }
 
     static hasMany = [tasks: Task]
 
     private String userName
     String email
+    String passwordTemp
     private String passwordHash
 
     public User(String name, String email, String password) {
@@ -24,7 +31,7 @@ class User {
     }
 
     public void setPassword(String password) {
-        passwordHash = hash(password)
+        passwordTemp = password
     }
 
     public Boolean passwordEquals(String password) {
