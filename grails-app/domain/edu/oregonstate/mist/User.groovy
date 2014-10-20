@@ -31,11 +31,16 @@ class User {
     }
 
     public void setPassword(String password) {
+        passwordHash = null
         passwordTemp = password
     }
 
     public Boolean passwordEquals(String password) {
-        return (hash(password) == passwordHash)
+        if (passwordTemp == null) {
+            return (passwordHash == hash(password))
+        } else {
+            return (passwordTemp == password)
+        }
     }
 
     public static String sha256sum(String message) {
