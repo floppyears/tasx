@@ -35,9 +35,10 @@ class User {
         MessageDigest md = MessageDigest.getInstance("SHA-256")
         md.update(message.getBytes())
 
+        final int POSITIVE = 1
         final int HEX_RADIX = 16
         byte[]     digestByteArray = md.digest()
-        BigInteger digestBigInteger = new BigInteger(1, digestByteArray)
+        BigInteger digestBigInteger = new BigInteger(POSITIVE, digestByteArray)
         String     digestString = digestBigInteger.toString(HEX_RADIX)
 
         final int SHA256SUM_LENGTH = 64
