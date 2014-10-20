@@ -10,15 +10,15 @@ class Task {
     private static enum Status { TODO, DONE, CANCELLED, DELETED }
 
     String description
-    private Interval schedule
+    Interval schedule
     Integer priority
     private Status status
 
     public Task(String description) {
         this.description = description
-        schedule = null
+        this.setUnscheduled()
         priority = 0
-        status = Status.TODO
+        this.setStatusIncomplete()
     }
 
     public void incrementPriority() {
@@ -43,5 +43,33 @@ class Task {
 
     public void setStatusDeleted() {
         status = Status.DELETED
+    }
+
+    public Boolean isIncomplete() {
+        return (status == Status.TODO)
+    }
+
+    public Boolean isComplete() {
+        return (status == Status.DONE)
+    }
+
+    public Boolean isCancelled() {
+        return (status == Status.CANCELLED)
+    }
+
+    public Boolean isDeleted() {
+        return (status == Status.DELETED)
+    }
+
+    public void setUnscheduled() {
+        schedule = null
+    }
+
+    public Boolean isScheduled() {
+        return (schedule != null)
+    }
+
+    public Boolean isScheduled(Interval when) {
+        return schedule.overlaps(when)
     }
 }
