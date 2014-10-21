@@ -46,25 +46,25 @@ class Interval {
     }
 
     public Boolean isInterval() {
-        return (this.getFrom() != this.getTo())
+        return this.getFrom() != this.getTo()
     }
 
     public Boolean isNull() {
-        return ((this.getFrom() == null) && (this.getTo() == null))
+        return this.getFrom() == null && this.getTo() == null
     }
 
     public Boolean contains(Calendar instant) {
         if (instant == null) {
             return false
         } else if (!this.isInterval()) {
-            return (instant == this.getAt())
+            return instant == this.getAt()
         } else { // this.isInterval()
             if (this.getFrom() == null) {
-                return (this.getTo().compareTo(instant) >= 0)
+                return this.getTo().compareTo(instant) >= 0
             } else if (this.getTo() == null) {
-                return (this.getFrom().compareTo(instant) < 0)
+                return this.getFrom().compareTo(instant) < 0
             } else {
-                return ((this.getFrom().compareTo(instant) < 0) && (this.getTo().compareTo(instant) >= 0))
+                return this.getFrom().compareTo(instant) < 0 && this.getTo().compareTo(instant) >= 0
             }
         }
     }
@@ -76,13 +76,13 @@ class Interval {
         if (this.isNull() || that.isNull()) {
             return false
         } else if (!thisIsInterval && !thatIsInterval) {
-            return ((this.getAt() == that.getAt()) && (this.getAt() != null))
+            return this.getAt() == that.getAt() && this.getAt() != null
         } else if (thisIsInterval && !thatIsInterval) {
             return this.contains(that.getAt())
         } else if (!thisIsInterval && thatIsInterval) {
             return that.contains(this.getAt())
         } else { // thisIsInterval && thatIsInterval
-            return (this.contains(that.getFrom()) || this.contains(that.getTo()))
+            return this.contains(that.getFrom()) || this.contains(that.getTo())
         }
     }
 }

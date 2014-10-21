@@ -28,7 +28,7 @@ class User {
     }
 
     public Boolean passwordEquals(String password) {
-        return (hash(password) == passwordHash)
+        return hash(password) == passwordHash
     }
 
     public static String sha256sum(String message) {
