@@ -5,10 +5,10 @@ class Interval {
     static constraints = {
     }
 
-    private Calendar from
-    private Calendar to
+    private Date from
+    private Date to
 
-    public Interval(Calendar from, Calendar to) {
+    public Interval(Date from, Date to) {
         setInterval(from, to)
     }
 
@@ -16,32 +16,32 @@ class Interval {
         setInterval(null, null)
     }
 
-    public void setAt(Calendar at) { // time: -----|----->
+    public void setAt(Date at) { // time: -----|----->
         setInterval(at, at)
     }
 
-    public void setUntil(Calendar to) { // time: =====|----->
+    public void setUntil(Date to) { // time: =====|----->
         setInterval(null, to)
     }
 
-    public void setAfter(Calendar from) { // time: -----|=====>
+    public void setAfter(Date from) { // time: -----|=====>
         setInterval(from, null)
     }
 
-    public void setInterval(Calendar from, Calendar to) { // time: ---|===|--->
+    public void setInterval(Date from, Date to) { // time: ---|===|--->
         this.from = from
         this.to = to
     }
 
-    public Calendar getFrom() {
+    public Date getFrom() {
         return from
     }
 
-    public Calendar getTo() {
+    public Date getTo() {
         return to
     }
 
-    public Calendar getAt() {
+    public Date getAt() {
         return to
     }
 
@@ -53,7 +53,7 @@ class Interval {
         return from == null && to == null
     }
 
-    public Boolean contains(Calendar instant) {
+    public Boolean contains(Date instant) {
         if (instant == null) {                     // if input is null,
             return false                           // output is false.
         } else if (!isInterval()) {                // if this is not an interval,
