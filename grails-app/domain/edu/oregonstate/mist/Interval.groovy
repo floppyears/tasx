@@ -9,23 +9,23 @@ class Interval {
     private Calendar to
 
     public Interval(Calendar from, Calendar to) {
-        this.setInterval(from, to)
+        setInterval(from, to)
     }
 
     public Interval() {
-        this.setInterval(null, null)
+        setInterval(null, null)
     }
 
     public void setAt(Calendar at) { // time: -----|----->
-        this.setInterval(at, at)
+        setInterval(at, at)
     }
 
     public void setUntil(Calendar to) { // time: =====|----->
-        this.setInterval(null, to)
+        setInterval(null, to)
     }
 
     public void setAfter(Calendar from) { // time: -----|=====>
-        this.setInterval(from, null)
+        setInterval(from, null)
     }
 
     public void setInterval(Calendar from, Calendar to) { // time: ---|===|--->
@@ -42,15 +42,15 @@ class Interval {
     }
 
     public Calendar getAt() {
-        return this.getTo()
+        return to
     }
 
     public Boolean isInterval() {
-        return this.getFrom() != this.getTo()
+        return from != to
     }
 
     public Boolean isNull() {
-        return this.getFrom() == null && this.getTo() == null
+        return from == null && to == null
     }
 
     public Boolean contains(Calendar instant) {
