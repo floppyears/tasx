@@ -54,17 +54,17 @@ class Interval {
     }
 
     public Boolean contains(Calendar instant) {
-        if (instant == null) {
-            return false
-        } else if (!this.isInterval()) {
-            return instant == this.getAt()
-        } else { // this.isInterval()
-            if (this.getFrom() == null) {
-                return this.getTo().compareTo(instant) >= 0
-            } else if (this.getTo() == null) {
-                return this.getFrom().compareTo(instant) < 0
-            } else {
-                return this.getFrom().compareTo(instant) < 0 && this.getTo().compareTo(instant) >= 0
+        if (instant == null) {                     // if input is null,
+            return false                           // output is false.
+        } else if (!isInterval()) {                // if this is not an interval,
+            return instant == getAt()              // does instant equal it?
+        } else {                                   // this is an interval.
+            if (from == null) {                        // if this interval is bounded above,
+                return instant <= to                   // is instant less than or equal to upper bound?
+            } else if (to == null) {                   // if this interval is bounded below,
+                return from < instant                  // is this instant greater than lower bound?
+            } else {                                   // if this interval is closed,
+                return from < instant && instant <= to // is instant between lower and upper bounds?
             }
         }
     }
