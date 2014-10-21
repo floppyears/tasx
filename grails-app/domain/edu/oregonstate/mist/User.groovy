@@ -19,7 +19,7 @@ class User {
         passwordHash = hash(password)
     }
 
-    public String getName() {
+    public String getName() { // private userName can only be accessed, not modified
         return userName
     }
 
