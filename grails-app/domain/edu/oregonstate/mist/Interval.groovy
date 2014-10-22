@@ -59,12 +59,12 @@ class Interval {
         } else if (!isInterval()) {                // if this is not an interval,
             return instant == getAt()              // does instant equal it?
         } else {                                   // this is an interval.
-            if (from == null) {                        // if this interval is bounded above,
-                return instant <= to                   // is instant less than or equal to upper bound?
-            } else if (to == null) {                   // if this interval is bounded below,
-                return from <= instant                 // is this instant greater than or equal to lower bound?
-            } else {                                   // if this interval is closed,
-                return from <= instant && instant <= to// is instant between lower and upper bounds?
+            if (from == null) {                         // if this interval is bounded above,
+                return instant <= to                    // is instant less than or equal to upper bound?
+            } else if (to == null) {                    // if this interval is bounded below,
+                return from <= instant                  // is this instant greater than or equal to lower bound?
+            } else {                                    // if this interval is closed,
+                return from <= instant && instant <= to // is instant between lower and upper bounds?
             }
         }
     }
