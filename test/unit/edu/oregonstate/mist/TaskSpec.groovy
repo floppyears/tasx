@@ -40,6 +40,19 @@ class TaskSpec extends Specification {
             mockTask.getDescription() == description
     }
 
+    void "set and get task schedule"() {
+        given:
+            final Date from = new Date()
+            final Date to = from + 1
+            final Interval anInterval = new Interval(from, to)
+            Task theTask = new Task()
+
+        when:
+            theTask.setSchedule(anInterval)
+        then:
+            theTask.getSchedule() == anInterval
+    }
+
     void "task is scheduled"() {
         given:
             final Date from = new Date()
