@@ -62,9 +62,9 @@ class Interval {
             if (from == null) {                        // if this interval is bounded above,
                 return instant <= to                   // is instant less than or equal to upper bound?
             } else if (to == null) {                   // if this interval is bounded below,
-                return from < instant                  // is this instant greater than lower bound?
+                return from <= instant                 // is this instant greater than or equal to lower bound?
             } else {                                   // if this interval is closed,
-                return from < instant && instant <= to // is instant between lower and upper bounds?
+                return from <= instant && instant <= to// is instant between lower and upper bounds?
             }
         }
     }
