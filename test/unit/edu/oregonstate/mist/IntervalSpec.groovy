@@ -60,5 +60,142 @@ class IntervalSpec extends Specification {
             interval.contains(to)     == true
             interval.contains(after)  == false
     }
+
+    void "null intervals do not overlap"() {
+        given:
+            Interval foo
+            Interval bar
+
+        when: "null interval does not overlap null interval"
+            foo = new Interval()
+            bar = new Interval()
+        then:
+            foo.overlaps(bar) == false
+
+        when: "null interval does not overlap closed interval"
+            foo = new Interval()
+            bar = new Interval(from, to)
+        then:
+            foo.overlaps(bar) == false
+
+        when: "closed interval does not overlap null interval"
+            foo = new Interval(from, to)
+            bar = new Interval()
+        then:
+            foo.overlaps(bar) == false
+
+        when: "null interval does not overlap open interval"
+            foo = new Interval()
+            bar = new Interval(null, to)
+        then:
+            foo.overlaps(bar) == false
+    }
+
+    void "empty intervals overlap only if they are equal"() {
+        given:
+            Interval foo
+            Interval bar
+
+        when: "empty intervals are equal"
+            foo = new Interval(at, at)
+            bar = new Interval(at, at)
+        then:
+            foo.overlaps(bar) == true
+
+        when: "empty intervals are unequal"
+            foo = new Interval(at, at)
+            bar = new Interval(to, to)
+        then:
+            foo.overlaps(bar) == false
+    }
+
+    void "empty intervals overlap non-empty intervals if latter contains former"() {
+        given:
+            Interval foo
+            Interval bar
+
+        when: "closed interval overlaps empty interval"
+            foo = new Interval(from, to)
+            bar = new Interval(at, at)
+        then:
+            foo.overlaps(bar) == true
+
+        when: "closed interval does not overlap empty interval"
+            foo = new Interval(from, to)
+            bar = new Interval(after, after)
+        then:
+            foo.overlaps(bar) == false
+
+        when: "empty interval overlaps closed interval"
+            foo = new Interval(at, at)
+            bar = new Interval(from, to)
+        then:
+            foo.overlaps(bar) == true
+
+        when: "empty interval does not overlap closed interval"
+            foo = new Interval(at, at)
+            bar = new Interval(to, after)
+        then:
+            foo.overlaps(bar) == false
+
+        when: "empty interval overlaps open interval"
+            foo = new Interval(at, at)
+            bar = new Interval(from, null)
+        then:
+            foo.overlaps(bar) == true
+    }
+
+    void "closed intervals overlap if one contains an endpoint of the other"() {
+        given:
+            Interval foo
+            Interval bar
+
+        when: "closed intervals do not overlap"
+            foo = new Interval(before, from)
+            bar = new Interval(to, after)
+        then:
+            foo.overlaps(bar) == false
+
+        when: "closed intervals share an endpoint"
+            foo = new Interval(before, at)
+            bar = new Interval(at, after)
+        then:
+            foo.overlaps(bar) == true
+
+        when: "closed intervals overlap"
+            foo = new Interval(before, to)
+            bar = new Interval(from, after)
+        then:
+            foo.overlaps(bar) == true
+
+        when: "closed interval contains another"
+            foo = new Interval(before, after)
+            bar = new Interval(from, to)
+        then:
+            foo.overlaps(bar) == true
+    }
+
+    void "open intervals overlap if one contains an endpoint of the other"() {
+        given:
+            Interval foo
+            Interval bar
+
+        when: "open intervals do not overlap"
+            foo = new Interval(null, from)
+            bar = new Interval(to, null)
+        then:
+            foo.overlaps(bar) == false
+
+        when: "open intervals share an endpoint"
+            foo = new Interval(null, at)
+            bar = new Interval(at, null)
+        then:
+            foo.overlaps(bar) == true
+
+        when: "open intervals overlap"
+            foo = new Interval(null, to)
+            bar = new Interval(from, null)
+        then:
+            foo.overlaps(bar) == true
     }
 }
