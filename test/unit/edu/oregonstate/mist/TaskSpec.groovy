@@ -88,4 +88,27 @@ class TaskSpec extends Specification {
             theTask.isScheduled() == false
             theTask.isScheduled(anInterval) == false
     }
+
+    void "set and get task priority"() {
+        given:
+            final Integer PRIORITY = 5
+            Task theTask = new Task()
+
+        when:
+            theTask.setPriority(PRIORITY)
+        then:
+            theTask.getPriority() == PRIORITY
+
+        when:
+            theTask.setPriority(PRIORITY)
+            theTask.incrementPriority()
+        then:
+            theTask.getPriority() == PRIORITY + 1
+
+        when:
+            theTask.setPriority(PRIORITY)
+            theTask.decrementPriority()
+        then:
+            theTask.getPriority() == PRIORITY - 1
+    }
 }
