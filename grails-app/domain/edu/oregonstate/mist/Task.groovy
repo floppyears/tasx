@@ -66,10 +66,10 @@ class Task {
     }
 
     public Boolean isScheduled() {
-        return schedule != null
+        return schedule != null && !schedule.isNull()
     }
 
     public Boolean isScheduled(Interval when) {
-        return schedule.overlaps(when)
+        return isScheduled() && schedule.overlaps(when)
     }
 }

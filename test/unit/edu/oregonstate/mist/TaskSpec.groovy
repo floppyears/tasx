@@ -27,5 +27,40 @@ class TaskSpec extends Specification {
             t.getPriority() == 0
             t.isIncomplete() == true
     }
+
+    void "task is scheduled"() {
+        given:
+            final Date from = new Date()
+            final Date to = from + 1
+            final Interval anInterval = new Interval(from, to)
+            Task theTask
+
+        when: "task instantiated without setting schedule"
+            theTask = new Task()
+        then:
+            theTask.isScheduled() == false
+            theTask.isScheduled(anInterval) == false
+
+        when: "task instantiated and schedule set"
+            theTask = new Task()
+            theTask.setSchedule(anInterval)
+        then:
+            theTask.isScheduled() == true
+            theTask.isScheduled(anInterval) == true
+
+        when: "task instantiated and schedule unset after being set"
+            theTask = new Task()
+            theTask.setSchedule(anInterval)
+            theTask.setUnscheduled()
+        then:
+            theTask.isScheduled() == false
+            theTask.isScheduled(anInterval) == false
+
+        when: "task instantiated with null interval"
+            theTask = new Task()
+            theTask.setSchedule(new Interval())
+        then:
+            theTask.isScheduled() == false
+            theTask.isScheduled(anInterval) == false
     }
 }
