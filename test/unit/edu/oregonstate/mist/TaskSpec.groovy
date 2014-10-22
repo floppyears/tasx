@@ -28,6 +28,18 @@ class TaskSpec extends Specification {
             t.isIncomplete() == true
     }
 
+    void "set and get description using mock task"() {
+        given:
+            final String description = "description"
+            Task mockTask = Mock()
+            mockTask.getDescription() >> description
+
+        when:
+            mockTask.setDescription(description)
+        then:
+            mockTask.getDescription() == description
+    }
+
     void "task is scheduled"() {
         given:
             final Date from = new Date()
