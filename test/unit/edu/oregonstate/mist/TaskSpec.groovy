@@ -111,4 +111,41 @@ class TaskSpec extends Specification {
         then:
             theTask.getPriority() == PRIORITY - 1
     }
+
+    void "set and get task status"() {
+        given:
+            Task theTask = new Task()
+
+        when:
+            theTask.setStatusIncomplete()
+        then:
+            theTask.isIncomplete() == true
+            theTask.isComplete() == false
+            theTask.isCancelled() == false
+            theTask.isDeleted() == false
+
+        when:
+            theTask.setStatusCompleted()
+        then:
+            theTask.isIncomplete() == false
+            theTask.isComplete() == true
+            theTask.isCancelled() == false
+            theTask.isDeleted() == false
+
+        when:
+            theTask.setStatusCancelled()
+        then:
+            theTask.isIncomplete() == false
+            theTask.isComplete() == false
+            theTask.isCancelled() == true
+            theTask.isDeleted() == false
+
+        when:
+            theTask.setStatusDeleted()
+        then:
+            theTask.isIncomplete() == false
+            theTask.isComplete() == false
+            theTask.isCancelled() == false
+            theTask.isDeleted() == true
+    }
 }
