@@ -15,6 +15,17 @@ class TaskSpec extends Specification {
     def cleanup() {
     }
 
-    void "test something"() {
+    void "initialize a task with a string and default values"() {
+        given:
+            String description = "this is a new task"
+
+        when:
+            Task t = new Task(description)
+        then:
+            t.getDescription() == description
+            t.isScheduled() == false
+            t.getPriority() == 0
+            t.isIncomplete() == true
+    }
     }
 }
