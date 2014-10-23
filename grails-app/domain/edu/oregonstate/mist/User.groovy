@@ -29,7 +29,7 @@ class User {
         this.setPassword(password)
     }
 
-    public String getName() {
+    public String getName() { // private userName can only be accessed, not modified
         return userName
     }
 
@@ -57,9 +57,7 @@ class User {
         String     digestString = digestBigInteger.toString(HEX_RADIX)
 
         final int SHA256SUM_LENGTH = 64
-        for (int padding = SHA256SUM_LENGTH - digestString.length(); padding > 0; --padding) {
-            digestString = "0" + digestString // prepend leading zeros to checksum
-        }
+        digestString = String.format("%"+SHA256SUM_LENGTH+"s", digestString).replace(' ', '0') // prepend leading zeros
 
         return digestString
     }

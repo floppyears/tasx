@@ -46,19 +46,19 @@ class Task {
     }
 
     public Boolean isIncomplete() {
-        return (status == Status.TODO)
+        return status == Status.TODO
     }
 
     public Boolean isComplete() {
-        return (status == Status.DONE)
+        return status == Status.DONE
     }
 
     public Boolean isCancelled() {
-        return (status == Status.CANCELLED)
+        return status == Status.CANCELLED
     }
 
     public Boolean isDeleted() {
-        return (status == Status.DELETED)
+        return status == Status.DELETED
     }
 
     public void setUnscheduled() {
@@ -66,10 +66,10 @@ class Task {
     }
 
     public Boolean isScheduled() {
-        return (schedule != null)
+        return schedule != null && !schedule.isNull()
     }
 
     public Boolean isScheduled(Interval when) {
-        return schedule.overlaps(when)
+        return isScheduled() && schedule.overlaps(when)
     }
 }
