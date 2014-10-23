@@ -19,7 +19,7 @@ class User {
         passwordHash = hash(password)
     }
 
-    public String getName() {
+    public String getName() { // private userName can only be accessed, not modified
         return userName
     }
 
@@ -28,21 +28,20 @@ class User {
     }
 
     public Boolean passwordEquals(String password) {
-        return (hash(password) == passwordHash)
+        return hash(password) == passwordHash
     }
 
     public static String sha256sum(String message) {
         MessageDigest md = MessageDigest.getInstance("SHA-256")
         md.update(message.getBytes())
 
+        final int HEX_RADIX = 16
         byte[]     digestByteArray = md.digest()
         BigInteger digestBigInteger = new BigInteger(1, digestByteArray)
-        String     digestString = digestBigInteger.toString(16)
+        String     digestString = digestBigInteger.toString(HEX_RADIX)
 
         final int SHA256SUM_LENGTH = 64
-        for (int padding = SHA256SUM_LENGTH - digestString.length(); padding > 0; --padding) {
-            digestString = "0" + digestString // prepend leading zeros to checksum
-        }
+        digestString = String.format("%"+SHA256SUM_LENGTH+"s", digestString).replace(' ', '0') // prepend leading zeros
 
         return digestString
     }
