@@ -15,6 +15,40 @@ class UserSpec extends Specification {
     def cleanup() {
     }
 
+    void "initialize user"() {
+        given:
+            final String NAME = "name"
+            final String EMAIL = "email@address.com"
+            final String PASSWORD = "pass123word"
+
+        when:
+            User testUser = new User(NAME, EMAIL, PASSWORD)
+        then:
+            testUser.getName() == NAME
+            testUser.getEmail() == EMAIL
+            testUser.passwordEquals(PASSWORD)
+    }
+
+    void "mutate user"() {
+        given:
+            final String NAME = "name"
+            final String EMAIL = "email@address.com"
+            final String NEW_EMAIL = "address@email.com"
+            final String PASSWORD = "pass123word"
+            final String NEW_PASSWORD = "word123pass"
+            User testUser = new User(NAME, EMAIL, PASSWORD)
+
+        when:
+            testUser.setEmail(NEW_EMAIL)
+        then:
+            testUser.getEmail() == NEW_EMAIL
+
+        when:
+            testUser.setPassword(NEW_PASSWORD)
+        then:
+            testUser.passwordEquals(NEW_PASSWORD)
+    }
+
     void "calculate sha256sum string from string"() {
         expect:
         User.sha256sum(message) == digest
