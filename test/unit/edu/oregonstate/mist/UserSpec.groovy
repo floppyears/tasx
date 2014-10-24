@@ -25,4 +25,26 @@ class UserSpec extends Specification {
         "the quick brown fox jumps over the lazy dog" | "05c6e08f1d9fdafa03147fcb8f82f124c76d2f70e3d989dc8aadb5e7d7450bec"
         "password"                                    | "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
     }
+
+    void "validate password"() {
+        given:
+            User testUser = new User("name", "email", password)
+
+        expect:
+            testUser.validate(["passwordTemp"]) == result
+            testUser.passwordHash == User.hash(password)
+            testUser.passwordTemp == null
+
+        where:
+            password      | result
+            "password"    | false  //  <10 characters,  <1 digit
+            "mypassword"  | false  // ==10 characters,  <1 digit
+            "ourpassword" | false  //  >10 characters,  <1 digit
+            "password1"   | false  //  <10 characters, ==1 digit
+            "apassword1"  | true   // ==10 characters, ==1 digit
+            "mypassword1" | true   //  >10 characters, ==1 digit
+            "pass23"      | false  //  <10 characters,  >1 digit
+            "password12"  | true   // ==10 characters,  >1 digit
+            "password123" | true   //  >10 characters,  >1 digit
+    }
 }

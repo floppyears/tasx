@@ -6,11 +6,13 @@ class User {
 
     static constraints = {
         passwordTemp(
-                [ minSize: 10,                          // password has at least 10 characters
-                  matches: ".*[0-9].*",                 // and at least 1 digit
+                [ minSize: 10,        // password has at least 10 characters
+                  matches: ".*\\d.*", // and at least 1 digit
                   validator: {
-                      passwordHash = hash(passwordTemp) // after validation, store password hash
-                      passwordTemp = null               // then overwrite temporary
+                      p, u ->
+                      u.passwordHash = hash(p) // after validation, store hash
+                      u.passwordTemp = null    // and overwrite temporary
+                      return true
                   }
                 ]
         )
