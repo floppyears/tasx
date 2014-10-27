@@ -82,5 +82,7 @@ class Task {
 
         return isScheduled() && (taskScheduleOverlaps || subTaskScheduleOverlaps)
     }
+    public Boolean hasSubTasks() {
+        return subTasks && !subTasks.isEmpty()
     }
 }
