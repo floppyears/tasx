@@ -20,7 +20,7 @@ class Task {
 
     public Task(String description) {
         this.description = description
-        this.setUnscheduled()
+        this.schedule = new Interval()
         priority = 0
         this.setStatusIncomplete()
     }
