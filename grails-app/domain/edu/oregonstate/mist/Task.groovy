@@ -14,6 +14,10 @@ class Task {
     Integer priority
     private Status status
 
+    public Task() {
+        this("")
+    }
+
     public Task(String description) {
         this.description = description
         this.setUnscheduled()
