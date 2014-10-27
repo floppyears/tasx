@@ -4,7 +4,7 @@ class Task {
 
     static constraints = {}
 
-    static hasMany = [prereqs: Task]
+    static hasMany = [subTasks: Task]
     static belongsTo = [user: User]
 
     private static enum Status { TODO, DONE, CANCELLED, DELETED }
