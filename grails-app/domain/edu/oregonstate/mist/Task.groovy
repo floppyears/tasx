@@ -62,7 +62,7 @@ class Task {
     }
 
     public void setUnscheduled() {
-        schedule = null
+        schedule.setNull()
     }
 
     public Boolean isScheduled() {
