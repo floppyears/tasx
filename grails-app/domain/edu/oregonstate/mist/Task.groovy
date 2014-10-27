@@ -70,10 +70,17 @@ class Task {
     }
 
     public Boolean isScheduled() {
-        return schedule != null && !schedule.isNull()
+        Boolean thisTaskIsScheduled = !schedule.isNull()
+        Boolean aSubTaskIsScheduled = subTasks.find({ it.isScheduled() })
+
+        return thisTaskIsScheduled || aSubTaskIsScheduled
     }
 
     public Boolean isScheduled(Interval when) {
-        return isScheduled() && schedule.overlaps(when)
+        Boolean    taskScheduleOverlaps = schedule.overlaps(when)
+        Boolean subTaskScheduleOverlaps = subTasks.find({ it.getSchedule().overlaps(when) })
+
+        return isScheduled() && (taskScheduleOverlaps || subTaskScheduleOverlaps)
+    }
     }
 }
