@@ -21,6 +21,23 @@ class IntervalSpec extends Specification {
     def cleanup() {
     }
 
+    void "initialize a new Interval"() {
+        given:
+            Interval interval
+
+        when:
+            interval = new Interval()
+        then:
+            interval.getFrom() == null
+            interval.getTo() == null
+
+        when:
+            interval = new Interval(from, to)
+        then:
+            interval.getFrom() == from
+            interval.getTo() == to
+    }
+
     void "interval contains date"() {
         given:
         Interval interval
