@@ -32,8 +32,6 @@ class UserSpec extends Specification {
 
         expect:
             testUser.validate(["passwordTemp"]) == result
-            testUser.passwordHash == User.hash(password)
-            testUser.passwordTemp == null
 
         where:
             password      | result
@@ -46,5 +44,18 @@ class UserSpec extends Specification {
             "pass23"      | false  //  <10 characters,  >1 digit
             "password12"  | true   // ==10 characters,  >1 digit
             "password123" | true   //  >10 characters,  >1 digit
+    }
+
+    void "only store password hash"() {
+        given:
+            final String VALID_PASSWORD = "password123"
+            User testUser = new User("name", "email", VALID_PASSWORD)
+
+        when:
+            testUser.save(flush: true)
+
+        then:
+            testUser.passwordTemp == null
+            testUser.passwordEquals(VALID_PASSWORD)
     }
 }
