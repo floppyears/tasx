@@ -155,4 +155,15 @@ class TaskSpec extends Specification {
             theTask.isCancelled() == false
             theTask.isDeleted() == true
     }
+
+    void "add subtasks"() {
+        given:
+            theTask = new Task()
+            subTask = new Task()
+
+        when:
+            theTask.addSubTask(subTask)
+        then:
+            theTask.hasSubTasks()
+    }
 }
