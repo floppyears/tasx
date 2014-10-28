@@ -89,6 +89,24 @@ class TaskSpec extends Specification {
             theTask.isScheduled(AN_INTERVAL) == false
     }
 
+    void "task is scheduled if subTask is scheduled"() {
+        given:
+            final Date FROM = new Date()
+            final Date TO = FROM + 1
+            final Interval AN_INTERVAL = new Interval(FROM, TO)
+            Task theTask
+            Task subTask
+
+        when:
+            theTask = new Task()
+            subTask = new Task()
+            subTask.setSchedule(AN_INTERVAL)
+            theTask.addSubTask(subTask)
+        then:
+            theTask.isScheduled() == true
+            theTask.isScheduled(AN_INTERVAL) == true
+    }
+
     void "set and get task priority"() {
         given:
             final Integer PRIORITY = 5
