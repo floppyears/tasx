@@ -9,6 +9,14 @@ import spock.lang.Specification
 @TestFor(Task)
 class TaskSpec extends Specification {
 
+    final Date FROM = new Date()
+    final Date TO = FROM + 1
+    final Interval AN_INTERVAL = new Interval(FROM, TO)
+    final String DESCRIPTION = "description"
+    final Integer PRIORITY = 5
+    Task theTask
+    Task subTask
+
     def setup() {
     }
 
@@ -16,21 +24,17 @@ class TaskSpec extends Specification {
     }
 
     void "initialize a task with a string and default values"() {
-        given:
-            String description = "this is a new task"
-
         when:
-            Task t = new Task(description)
+            theTask = new Task(DESCRIPTION)
         then:
-            t.getDescription() == description
-            t.isScheduled() == false
-            t.getPriority() == 0
-            t.isIncomplete() == true
+            theTask.getDescription() == DESCRIPTION
+            theTask.isScheduled() == false
+            theTask.getPriority() == 0
+            theTask.isIncomplete() == true
     }
 
     void "set and get description using mock task"() {
         given:
-            final String DESCRIPTION = "description"
             Task mockTask = Mock()
             mockTask.getDescription() >> DESCRIPTION
 
@@ -42,10 +46,7 @@ class TaskSpec extends Specification {
 
     void "set and get task schedule"() {
         given:
-            final Date FROM = new Date()
-            final Date TO = FROM + 1
-            final Interval AN_INTERVAL = new Interval(FROM, TO)
-            Task theTask = new Task()
+            theTask = new Task()
 
         when:
             theTask.setSchedule(AN_INTERVAL)
@@ -54,12 +55,6 @@ class TaskSpec extends Specification {
     }
 
     void "task is scheduled"() {
-        given:
-            final Date FROM = new Date()
-            final Date TO = FROM + 1
-            final Interval AN_INTERVAL = new Interval(FROM, TO)
-            Task theTask
-
         when: "task instantiated without setting schedule"
             theTask = new Task()
         then:
@@ -91,16 +86,11 @@ class TaskSpec extends Specification {
 
     void "task is scheduled if subTask is scheduled"() {
         given:
-            final Date FROM = new Date()
-            final Date TO = FROM + 1
-            final Interval AN_INTERVAL = new Interval(FROM, TO)
-            Task theTask
-            Task subTask
-
-        when:
             theTask = new Task()
             subTask = new Task()
             subTask.setSchedule(AN_INTERVAL)
+
+        when:
             theTask.addSubTask(subTask)
         then:
             theTask.isScheduled() == true
@@ -109,8 +99,7 @@ class TaskSpec extends Specification {
 
     void "set and get task priority"() {
         given:
-            final Integer PRIORITY = 5
-            Task theTask = new Task()
+            theTask = new Task()
 
         when:
             theTask.setPriority(PRIORITY)
@@ -132,7 +121,7 @@ class TaskSpec extends Specification {
 
     void "set and get task status"() {
         given:
-            Task theTask = new Task()
+            theTask = new Task()
 
         when:
             theTask.setStatusIncomplete()
