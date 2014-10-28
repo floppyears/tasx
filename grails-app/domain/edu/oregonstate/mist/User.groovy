@@ -5,18 +5,30 @@ import java.security.MessageDigest
 class User {
 
     static constraints = {
+        passwordTemp(
+                [ minSize: 10,        // password has at least 10 characters
+                  matches: ".*\\d.*", // and at least 1 digit
+                  validator: {
+                      p, u ->
+                      u.passwordHash = hash(p) // after validation, store hash
+                      u.passwordTemp = null    // and overwrite temporary
+                      return true
+                  }
+                ]
+        )
     }
 
     static hasMany = [tasks: Task]
 
     private String userName
     String email
+    String passwordTemp
     private String passwordHash
 
     public User(String name, String email, String password) {
         userName = name
         this.email = email
-        passwordHash = hash(password)
+        this.setPassword(password)
     }
 
     public String getName() { // private userName can only be accessed, not modified
@@ -24,20 +36,26 @@ class User {
     }
 
     public void setPassword(String password) {
-        passwordHash = hash(password)
+        passwordHash = null
+        passwordTemp = password
     }
 
     public Boolean passwordEquals(String password) {
-        return hash(password) == passwordHash
+        if (passwordTemp == null) {
+            return (passwordHash == hash(password))
+        } else {
+            return (passwordTemp == password)
+        }
     }
 
     public static String sha256sum(String message) {
         MessageDigest md = MessageDigest.getInstance("SHA-256")
         md.update(message.getBytes())
 
+        final int POSITIVE = 1
         final int HEX_RADIX = 16
         byte[]     digestByteArray = md.digest()
-        BigInteger digestBigInteger = new BigInteger(1, digestByteArray)
+        BigInteger digestBigInteger = new BigInteger(POSITIVE, digestByteArray)
         String     digestString = digestBigInteger.toString(HEX_RADIX)
 
         final int SHA256SUM_LENGTH = 64
