@@ -83,14 +83,6 @@ class Task {
         return isScheduled() && (taskScheduleOverlaps || subTaskScheduleOverlaps)
     }
 
-    public void addSubTask(Task subTask) {
-        if (subTasks == null) {
-            subTasks = []
-        }
-
-        subTasks.add(subTask)
-    }
-
     public Boolean hasSubTasks() {
         return subTasks && !subTasks.isEmpty()
     }

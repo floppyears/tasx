@@ -91,7 +91,7 @@ class TaskSpec extends Specification {
             subTask.setSchedule(AN_INTERVAL)
 
         when:
-            theTask.addSubTask(subTask)
+            theTask.addToSubTasks(subTask)
         then:
             theTask.isScheduled() == true
             theTask.isScheduled(AN_INTERVAL) == true
@@ -162,7 +162,7 @@ class TaskSpec extends Specification {
             subTask = new Task()
 
         when:
-            theTask.addSubTask(subTask)
+            theTask.addToSubTasks(subTask)
         then:
             theTask.hasSubTasks()
     }
