@@ -81,4 +81,27 @@ class UserSpec extends Specification {
             "password12"  | true   // ==10 characters,  >1 digit
             "password123" | true   //  >10 characters,  >1 digit
     }
+
+    void "validate email"() {
+        given:
+            User testUser = new User("name", email, "password123")
+
+        expect:
+            testUser.validate(["email"]) == result
+
+        where:
+            email         | result
+            "foo"         | false
+            "@"           | false
+            "foo@"        | false
+            "@bar"        | false
+            "@."          | false
+            "foo@."       | false
+            "@bar."       | false
+            "@.com"       | false
+            "foo@bar."    | false
+            "foo@.com"    | false
+            "foo@bar.com" | true
+            "foo@bar.baz" | false
+    }
 }
