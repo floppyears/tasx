@@ -15,6 +15,40 @@ class UserSpec extends Specification {
     def cleanup() {
     }
 
+    void "initialize user"() {
+        given:
+            final String NAME = "name"
+            final String EMAIL = "email@address.com"
+            final String PASSWORD = "pass123word"
+
+        when:
+            User testUser = new User(NAME, EMAIL, PASSWORD)
+        then:
+            testUser.getName() == NAME
+            testUser.getEmail() == EMAIL
+            testUser.passwordEquals(PASSWORD)
+    }
+
+    void "mutate user"() {
+        given:
+            final String NAME = "name"
+            final String EMAIL = "email@address.com"
+            final String NEW_EMAIL = "address@email.com"
+            final String PASSWORD = "pass123word"
+            final String NEW_PASSWORD = "word123pass"
+            User testUser = new User(NAME, EMAIL, PASSWORD)
+
+        when:
+            testUser.setEmail(NEW_EMAIL)
+        then:
+            testUser.getEmail() == NEW_EMAIL
+
+        when:
+            testUser.setPassword(NEW_PASSWORD)
+        then:
+            testUser.passwordEquals(NEW_PASSWORD)
+    }
+
     void "calculate sha256sum string from string"() {
         expect:
         User.sha256sum(message) == digest
@@ -48,8 +82,9 @@ class UserSpec extends Specification {
 
     void "only store password hash"() {
         given:
+            final String VALID_EMAIL = "foo@bar.com"
             final String VALID_PASSWORD = "password123"
-            User testUser = new User("name", "email", VALID_PASSWORD)
+            User testUser = new User("name", VALID_EMAIL, VALID_PASSWORD)
 
         when:
             testUser.save(flush: true)
@@ -57,5 +92,28 @@ class UserSpec extends Specification {
         then:
             testUser.passwordTemp == null
             testUser.passwordEquals(VALID_PASSWORD)
+    }
+
+    void "validate email"() {
+        given:
+            User testUser = new User("name", email, "password123")
+
+        expect:
+            testUser.validate(["email"]) == result
+
+        where:
+            email         | result
+            "foo"         | false
+            "@"           | false
+            "foo@"        | false
+            "@bar"        | false
+            "@."          | false
+            "foo@."       | false
+            "@bar."       | false
+            "@.com"       | false
+            "foo@bar."    | false
+            "foo@.com"    | false
+            "foo@bar.com" | true
+            "foo@bar.baz" | false
     }
 }
