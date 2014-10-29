@@ -30,63 +30,63 @@ class TaskSpec extends Specification {
 
     void "set and get description using mock task"() {
         given:
-            final String DESCRIPTION = "description"
+            final String description = "description"
             Task mockTask = Mock()
-            mockTask.getDescription() >> DESCRIPTION
+            mockTask.getDescription() >> description
 
         when:
-            mockTask.setDescription(DESCRIPTION)
+            mockTask.setDescription(description)
         then:
-            mockTask.getDescription() == DESCRIPTION
+            mockTask.getDescription() == description
     }
 
     void "set and get task schedule"() {
         given:
-            final Date FROM = new Date()
-            final Date TO = FROM + 1
-            final Interval AN_INTERVAL = new Interval(FROM, TO)
+            final Date from = new Date()
+            final Date to = from + 1
+            final Interval anInterval = new Interval(from, to)
             Task theTask = new Task()
 
         when:
-            theTask.setSchedule(AN_INTERVAL)
+            theTask.setSchedule(anInterval)
         then:
-            theTask.getSchedule() == AN_INTERVAL
+            theTask.getSchedule() == anInterval
     }
 
     void "task is scheduled"() {
         given:
-            final Date FROM = new Date()
-            final Date TO = FROM + 1
-            final Interval AN_INTERVAL = new Interval(FROM, TO)
+            final Date from = new Date()
+            final Date to = from + 1
+            final Interval anInterval = new Interval(from, to)
             Task theTask
 
         when: "task instantiated without setting schedule"
             theTask = new Task()
         then:
             theTask.isScheduled() == false
-            theTask.isScheduled(AN_INTERVAL) == false
+            theTask.isScheduled(anInterval) == false
 
         when: "task instantiated and schedule set"
             theTask = new Task()
-            theTask.setSchedule(AN_INTERVAL)
+            theTask.setSchedule(anInterval)
         then:
             theTask.isScheduled() == true
-            theTask.isScheduled(AN_INTERVAL) == true
+            theTask.isScheduled(anInterval) == true
 
         when: "task instantiated and schedule unset after being set"
             theTask = new Task()
-            theTask.setSchedule(AN_INTERVAL)
+            theTask.setSchedule(anInterval)
             theTask.setUnscheduled()
         then:
             theTask.isScheduled() == false
-            theTask.isScheduled(AN_INTERVAL) == false
+            theTask.isScheduled(anInterval) == false
 
         when: "task instantiated with null interval"
             theTask = new Task()
             theTask.setSchedule(new Interval())
         then:
             theTask.isScheduled() == false
-            theTask.isScheduled(AN_INTERVAL) == false
+            theTask.isScheduled(anInterval) == false
     }
 
     void "set and get task priority"() {
