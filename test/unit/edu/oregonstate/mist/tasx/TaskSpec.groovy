@@ -1,4 +1,4 @@
-package edu.oregonstate.mist
+package edu.oregonstate.mist.tasx
 
 import grails.test.mixin.TestFor
 import spock.lang.Specification
