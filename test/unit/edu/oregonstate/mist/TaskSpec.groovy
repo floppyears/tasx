@@ -9,6 +9,13 @@ import spock.lang.Specification
 @TestFor(Task)
 class TaskSpec extends Specification {
 
+    final String DESCRIPTION = "description"
+    final Date FROM = new Date()
+    final Date TO = FROM + 1
+    final Interval AN_INTERVAL = new Interval(FROM, TO)
+    final Integer PRIORITY = 5
+    Task testTask
+
     def setup() {
     }
 
@@ -16,136 +23,122 @@ class TaskSpec extends Specification {
     }
 
     void "initialize a task with a string and default values"() {
-        given:
-            String description = "this is a new task"
-
         when:
-            Task t = new Task(description)
+            testTask = new Task(DESCRIPTION)
         then:
-            t.getDescription() == description
-            t.isScheduled() == false
-            t.getPriority() == 0
-            t.isIncomplete() == true
+            testTask.getDescription() == DESCRIPTION
+            testTask.isScheduled() == false
+            testTask.getPriority() == 0
+            testTask.isIncomplete() == true
     }
 
     void "set and get description using mock task"() {
         given:
-            final String description = "description"
             Task mockTask = Mock()
-            mockTask.getDescription() >> description
+            mockTask.getDescription() >> DESCRIPTION
 
         when:
-            mockTask.setDescription(description)
+            mockTask.setDescription(DESCRIPTION)
         then:
-            mockTask.getDescription() == description
+            mockTask.getDescription() == DESCRIPTION
     }
 
     void "set and get task schedule"() {
         given:
-            final Date from = new Date()
-            final Date to = from + 1
-            final Interval anInterval = new Interval(from, to)
-            Task theTask = new Task()
+            testTask = new Task()
 
         when:
-            theTask.setSchedule(anInterval)
+            testTask.setSchedule(AN_INTERVAL)
         then:
-            theTask.getSchedule() == anInterval
+            testTask.getSchedule() == AN_INTERVAL
     }
 
     void "task is scheduled"() {
-        given:
-            final Date from = new Date()
-            final Date to = from + 1
-            final Interval anInterval = new Interval(from, to)
-            Task theTask
-
         when: "task instantiated without setting schedule"
-            theTask = new Task()
+            testTask = new Task()
         then:
-            theTask.isScheduled() == false
-            theTask.isScheduled(anInterval) == false
+            testTask.isScheduled() == false
+            testTask.isScheduled(AN_INTERVAL) == false
 
         when: "task instantiated and schedule set"
-            theTask = new Task()
-            theTask.setSchedule(anInterval)
+            testTask = new Task()
+            testTask.setSchedule(AN_INTERVAL)
         then:
-            theTask.isScheduled() == true
-            theTask.isScheduled(anInterval) == true
+            testTask.isScheduled() == true
+            testTask.isScheduled(AN_INTERVAL) == true
 
         when: "task instantiated and schedule unset after being set"
-            theTask = new Task()
-            theTask.setSchedule(anInterval)
-            theTask.setUnscheduled()
+            testTask = new Task()
+            testTask.setSchedule(AN_INTERVAL)
+            testTask.setUnscheduled()
         then:
-            theTask.isScheduled() == false
-            theTask.isScheduled(anInterval) == false
+            testTask.isScheduled() == false
+            testTask.isScheduled(AN_INTERVAL) == false
 
         when: "task instantiated with null interval"
-            theTask = new Task()
-            theTask.setSchedule(new Interval())
+            testTask = new Task()
+            testTask.setSchedule(new Interval())
         then:
-            theTask.isScheduled() == false
-            theTask.isScheduled(anInterval) == false
+            testTask.isScheduled() == false
+            testTask.isScheduled(AN_INTERVAL) == false
     }
 
     void "set and get task priority"() {
         given:
-            final Integer PRIORITY = 5
-            Task theTask = new Task()
+            testTask = new Task()
 
         when:
-            theTask.setPriority(PRIORITY)
+            testTask.setPriority(PRIORITY)
         then:
-            theTask.getPriority() == PRIORITY
+            testTask.getPriority() == PRIORITY
 
         when:
-            theTask.setPriority(PRIORITY)
-            theTask.incrementPriority()
+            testTask.setPriority(PRIORITY)
+            testTask.incrementPriority()
         then:
-            theTask.getPriority() == PRIORITY + 1
+            testTask.getPriority() == PRIORITY + 1
 
         when:
-            theTask.setPriority(PRIORITY)
-            theTask.decrementPriority()
+            testTask.setPriority(PRIORITY)
+            testTask.decrementPriority()
         then:
-            theTask.getPriority() == PRIORITY - 1
+            testTask.getPriority() == PRIORITY - 1
     }
 
     void "set and get task status"() {
         given:
-            Task theTask = new Task()
+            testTask = new Task()
 
         when:
-            theTask.setStatusIncomplete()
+            testTask.setStatusIncomplete()
         then:
-            theTask.isIncomplete() == true
-            theTask.isComplete() == false
-            theTask.isCancelled() == false
-            theTask.isDeleted() == false
+            testTask.isIncomplete() == true
+            testTask.isComplete() == false
+            testTask.isCancelled() == false
+            testTask.isDeleted() == false
 
         when:
-            theTask.setStatusCompleted()
+            testTask.setStatusCompleted()
         then:
-            theTask.isIncomplete() == false
-            theTask.isComplete() == true
-            theTask.isCancelled() == false
-            theTask.isDeleted() == false
+            testTask.isIncomplete() == false
+            testTask.isComplete() == true
+            testTask.isCancelled() == false
+            testTask.isDeleted() == false
 
         when:
-            theTask.setStatusCancelled()
+            testTask.setStatusCancelled()
         then:
-            theTask.isIncomplete() == false
-            theTask.isComplete() == false
-            theTask.isCancelled() == true
-            theTask.isDeleted() == false
+            testTask.isIncomplete() == false
+            testTask.isComplete() == false
+            testTask.isCancelled() == true
+            testTask.isDeleted() == false
 
         when:
-            theTask.setStatusDeleted()
+            testTask.setStatusDeleted()
         then:
-            theTask.isIncomplete() == false
-            theTask.isComplete() == false
-            theTask.isCancelled() == false
-            theTask.isDeleted() == true
+            testTask.isIncomplete() == false
+            testTask.isComplete() == false
+            testTask.isCancelled() == false
+            testTask.isDeleted() == true
     }
 }
