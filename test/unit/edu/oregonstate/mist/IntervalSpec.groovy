@@ -9,11 +9,11 @@ import spock.lang.Specification
 @TestFor(Interval)
 class IntervalSpec extends Specification {
 
-    Date before = new Date(),
-         from   = before + 1,
-         at     = before + 2,
-         to     = before + 3,
-         after  = before + 4
+    final Date BEFORE = new Date(),
+               FROM   = BEFORE + 1,
+               AT     = BEFORE + 2,
+               TO     = BEFORE + 3,
+               AFTER  = BEFORE + 4
 
     def setup() {
     }
@@ -32,10 +32,10 @@ class IntervalSpec extends Specification {
             interval.getTo() == null
 
         when:
-            interval = new Interval(from, to)
+            interval = new Interval(FROM, TO)
         then:
-            interval.getFrom() == from
-            interval.getTo() == to
+            interval.getFrom() == FROM
+            interval.getTo() == TO
     }
 
     void "interval contains date"() {
@@ -48,34 +48,34 @@ class IntervalSpec extends Specification {
             interval.contains(null) == false
 
         when: "empty interval contains instant"
-            interval = new Interval(at, at)
+            interval = new Interval(AT, AT)
         then:
-            interval.contains(before) == false
-            interval.contains(at)     == true
-            interval.contains(after)  == false
+            interval.contains(BEFORE) == false
+            interval.contains(AT)     == true
+            interval.contains(AFTER)  == false
 
         when: "open interval contains instant"
-            interval = new Interval(null, to)
+            interval = new Interval(null, TO)
         then:
-            interval.contains(before) == true
-            interval.contains(to)     == true
-            interval.contains(after)  == false
+            interval.contains(BEFORE) == true
+            interval.contains(TO)     == true
+            interval.contains(AFTER)  == false
 
         when: "open interval contains instant"
-            interval = new Interval(from, null)
+            interval = new Interval(FROM, null)
         then:
-            interval.contains(before) == false
-            interval.contains(from)   == true
-            interval.contains(after)  == true
+            interval.contains(BEFORE) == false
+            interval.contains(FROM)   == true
+            interval.contains(AFTER)  == true
 
         when: "closed interval contains instant"
-            interval = new Interval(from, to)
+            interval = new Interval(FROM, TO)
         then:
-            interval.contains(before) == false
-            interval.contains(from)   == true
-            interval.contains(at)     == true
-            interval.contains(to)     == true
-            interval.contains(after)  == false
+            interval.contains(BEFORE) == false
+            interval.contains(FROM)   == true
+            interval.contains(AT)     == true
+            interval.contains(TO)     == true
+            interval.contains(AFTER)  == false
     }
 
     void "null intervals do not overlap"() {
@@ -91,19 +91,19 @@ class IntervalSpec extends Specification {
 
         when: "null interval does not overlap closed interval"
             foo = new Interval()
-            bar = new Interval(from, to)
+            bar = new Interval(FROM, TO)
         then:
             foo.overlaps(bar) == false
 
         when: "closed interval does not overlap null interval"
-            foo = new Interval(from, to)
+            foo = new Interval(FROM, TO)
             bar = new Interval()
         then:
             foo.overlaps(bar) == false
 
         when: "null interval does not overlap open interval"
             foo = new Interval()
-            bar = new Interval(null, to)
+            bar = new Interval(null, TO)
         then:
             foo.overlaps(bar) == false
     }
@@ -114,14 +114,14 @@ class IntervalSpec extends Specification {
             Interval bar
 
         when: "empty intervals are equal"
-            foo = new Interval(at, at)
-            bar = new Interval(at, at)
+            foo = new Interval(AT, AT)
+            bar = new Interval(AT, AT)
         then:
             foo.overlaps(bar) == true
 
         when: "empty intervals are unequal"
-            foo = new Interval(at, at)
-            bar = new Interval(to, to)
+            foo = new Interval(AT, AT)
+            bar = new Interval(TO, TO)
         then:
             foo.overlaps(bar) == false
     }
@@ -132,32 +132,32 @@ class IntervalSpec extends Specification {
             Interval bar
 
         when: "closed interval overlaps empty interval"
-            foo = new Interval(from, to)
-            bar = new Interval(at, at)
+            foo = new Interval(FROM, TO)
+            bar = new Interval(AT, AT)
         then:
             foo.overlaps(bar) == true
 
         when: "closed interval does not overlap empty interval"
-            foo = new Interval(from, to)
-            bar = new Interval(after, after)
+            foo = new Interval(FROM, TO)
+            bar = new Interval(AFTER, AFTER)
         then:
             foo.overlaps(bar) == false
 
         when: "empty interval overlaps closed interval"
-            foo = new Interval(at, at)
-            bar = new Interval(from, to)
+            foo = new Interval(AT, AT)
+            bar = new Interval(FROM, TO)
         then:
             foo.overlaps(bar) == true
 
         when: "empty interval does not overlap closed interval"
-            foo = new Interval(at, at)
-            bar = new Interval(to, after)
+            foo = new Interval(AT, AT)
+            bar = new Interval(TO, AFTER)
         then:
             foo.overlaps(bar) == false
 
         when: "empty interval overlaps open interval"
-            foo = new Interval(at, at)
-            bar = new Interval(from, null)
+            foo = new Interval(AT, AT)
+            bar = new Interval(FROM, null)
         then:
             foo.overlaps(bar) == true
     }
@@ -168,26 +168,26 @@ class IntervalSpec extends Specification {
             Interval bar
 
         when: "closed intervals do not overlap"
-            foo = new Interval(before, from)
-            bar = new Interval(to, after)
+            foo = new Interval(BEFORE, FROM)
+            bar = new Interval(TO, AFTER)
         then:
             foo.overlaps(bar) == false
 
         when: "closed intervals share an endpoint"
-            foo = new Interval(before, at)
-            bar = new Interval(at, after)
+            foo = new Interval(BEFORE, AT)
+            bar = new Interval(AT, AFTER)
         then:
             foo.overlaps(bar) == true
 
         when: "closed intervals overlap"
-            foo = new Interval(before, to)
-            bar = new Interval(from, after)
+            foo = new Interval(BEFORE, TO)
+            bar = new Interval(FROM, AFTER)
         then:
             foo.overlaps(bar) == true
 
         when: "closed interval contains another"
-            foo = new Interval(before, after)
-            bar = new Interval(from, to)
+            foo = new Interval(BEFORE, AFTER)
+            bar = new Interval(FROM, TO)
         then:
             foo.overlaps(bar) == true
     }
@@ -198,20 +198,20 @@ class IntervalSpec extends Specification {
             Interval bar
 
         when: "open intervals do not overlap"
-            foo = new Interval(null, from)
-            bar = new Interval(to, null)
+            foo = new Interval(null, FROM)
+            bar = new Interval(TO, null)
         then:
             foo.overlaps(bar) == false
 
         when: "open intervals share an endpoint"
-            foo = new Interval(null, at)
-            bar = new Interval(at, null)
+            foo = new Interval(null, AT)
+            bar = new Interval(AT, null)
         then:
             foo.overlaps(bar) == true
 
         when: "open intervals overlap"
-            foo = new Interval(null, to)
-            bar = new Interval(from, null)
+            foo = new Interval(null, TO)
+            bar = new Interval(FROM, null)
         then:
             foo.overlaps(bar) == true
     }

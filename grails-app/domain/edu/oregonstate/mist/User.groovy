@@ -6,20 +6,22 @@ class User {
 
     static constraints = {
         email(email:true)
-        passwordTemp(
-                [ minSize: 10,        // password has at least 10 characters
-                  matches: ".*\\d.*", // and at least 1 digit
-                  validator: {
-                      p, u ->
-                      u.passwordHash = hash(p) // after validation, store hash
-                      u.passwordTemp = null    // and overwrite temporary
-                      return true
-                  }
-                ]
-        )
+        passwordTemp([minSize: 10,         // password has at least 10 characters
+                      matches: ".*\\d.*"]) // and at least 1 digit
     }
 
     static hasMany = [tasks: Task]
+
+    static transients = ["passwordTemp"]
+
+    void beforeInsert() {
+        beforeUpdate()
+    }
+
+    void beforeUpdate() {
+        passwordHash = hash(passwordTemp)
+        passwordTemp = null
+    }
 
     private String userName
     String email
