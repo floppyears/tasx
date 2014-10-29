@@ -9,6 +9,12 @@ import spock.lang.Specification
 @TestFor(User)
 class UserSpec extends Specification {
 
+    final static String NAME = "name"
+    final static String EMAIL = "foo@bar.com"
+    final static String PASSWORD = "pass123word"
+    final static String NEW_EMAIL = "bar@foo.com"
+    final static String NEW_PASSWORD = "word123pass"
+
     def setup() {
     }
 
@@ -16,11 +22,6 @@ class UserSpec extends Specification {
     }
 
     void "initialize user"() {
-        given:
-            final String NAME = "name"
-            final String EMAIL = "email@address.com"
-            final String PASSWORD = "pass123word"
-
         when:
             User testUser = new User(NAME, EMAIL, PASSWORD)
         then:
@@ -31,11 +32,6 @@ class UserSpec extends Specification {
 
     void "mutate user"() {
         given:
-            final String NAME = "name"
-            final String EMAIL = "email@address.com"
-            final String NEW_EMAIL = "address@email.com"
-            final String PASSWORD = "pass123word"
-            final String NEW_PASSWORD = "word123pass"
             User testUser = new User(NAME, EMAIL, PASSWORD)
 
         when:
@@ -62,7 +58,7 @@ class UserSpec extends Specification {
 
     void "validate password"() {
         given:
-            User testUser = new User("name", "email", password)
+            User testUser = new User(NAME, EMAIL, password)
 
         expect:
             testUser.validate(["passwordTemp"]) == result
@@ -78,25 +74,25 @@ class UserSpec extends Specification {
             "pass23"      | false  //  <10 characters,  >1 digit
             "password12"  | true   // ==10 characters,  >1 digit
             "password123" | true   //  >10 characters,  >1 digit
+            PASSWORD      | true
+            NEW_PASSWORD  | true
     }
 
     void "only store password hash"() {
         given:
-            final String VALID_EMAIL = "foo@bar.com"
-            final String VALID_PASSWORD = "password123"
-            User testUser = new User("name", VALID_EMAIL, VALID_PASSWORD)
+            User testUser = new User(NAME, EMAIL, PASSWORD)
 
         when:
             testUser.save(flush: true)
 
         then:
             testUser.passwordTemp == null
-            testUser.passwordEquals(VALID_PASSWORD)
+            testUser.passwordEquals(PASSWORD)
     }
 
     void "validate email"() {
         given:
-            User testUser = new User("name", email, "password123")
+            User testUser = new User(NAME, email, PASSWORD)
 
         expect:
             testUser.validate(["email"]) == result
@@ -115,5 +111,7 @@ class UserSpec extends Specification {
             "foo@.com"    | false
             "foo@bar.com" | true
             "foo@bar.baz" | false
+            EMAIL         | true
+            NEW_EMAIL     | true
     }
 }
