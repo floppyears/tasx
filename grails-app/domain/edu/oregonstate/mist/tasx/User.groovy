@@ -34,15 +34,34 @@ class User {
         this.setPassword(password)
     }
 
-    public String getName() { // private userName can only be accessed, not modified
+    /**
+     * Get the userName (which cannot be set after instantiation).
+     *
+     * @return userName
+     */
+    public String getName() {
         return userName
     }
 
+    /**
+     * Set the password.
+     *
+     * The plaintext password will be stored in a temporary variable until the
+     * User is inserted or updated, at which point it will be hashed and saved.
+     *
+     * @param password
+     */
     public void setPassword(String password) {
         passwordHash = null
         passwordTemp = password
     }
 
+    /**
+     * Test whether the input String equals the stored password.
+     *
+     * @param password any String
+     * @return         true if input String is the password
+     */
     public Boolean passwordEquals(String password) {
         if (passwordTemp == null) {
             return (passwordHash == hash(password))
@@ -51,6 +70,12 @@ class User {
         }
     }
 
+    /**
+     * Given a message String, compute SHA256 digest String.
+     *
+     * @param message any String
+     * @return        the digest String
+     */
     public static String sha256sum(String message) {
         MessageDigest md = MessageDigest.getInstance("SHA-256")
         md.update(message.getBytes())

@@ -12,19 +12,48 @@ class Interval {
         setInterval(from, to)
     }
 
-    public void setAt(Date at) { // time: -----|----->
+    /**
+     * Set the Interval to the instant defined by the input argument.
+     *
+     * Time: -----|----->
+     *
+     * @param at any Date
+     */
+    public void setAt(Date at) {
         setInterval(at, at)
     }
 
-    public void setUntil(Date to) { // time: =====|----->
+    /**
+     * Set the Interval to the open interval bounded above by the input argument.
+     *
+     * Time: =====|----->
+     *
+     * @param to the upper bound
+     */
+    public void setUntil(Date to) {
         setInterval(null, to)
     }
 
-    public void setAfter(Date from) { // time: -----|=====>
+    /**
+     * Set the Interval to the open interval bounded below by the input argument.
+     *
+     * Time: -----|=====>
+     *
+     * @param from the lower bound
+     */
+    public void setAfter(Date from) {
         setInterval(from, null)
     }
 
-    public void setInterval(Date from, Date to) { // time: ---|===|--->
+    /**
+     * Set the Interval to the closed interval bounded above and below by the input arguments.
+     *
+     * Time: ---|===|--->
+     *
+     * @param from the lower bound
+     * @param to   the upper bound
+     */
+    public void setInterval(Date from, Date to) {
         this.from = from
         this.to = to
     }
@@ -37,10 +66,20 @@ class Interval {
         return to
     }
 
+    /**
+     * Return the date of the instant defined by setAt(Date).
+     *
+     * @return either the lower bound or the upper bound
+     */
     public Date getAt() {
         return to
     }
 
+    /**
+     * Is this an open or closed Interval?
+     *
+     * @return true if endpoints are not equal
+     */
     public Boolean isInterval() {
         return from != to
     }
@@ -49,10 +88,21 @@ class Interval {
         setInterval(null, null)
     }
 
+    /**
+     * Is this a null Interval?
+     *
+     * @return true if both endpoints equal null
+     */
     public Boolean isNull() {
         return from == null && to == null
     }
 
+    /**
+     * Does this Interval contain the input Date?
+     *
+     * @param instant the input date
+     * @return        true if date is an endpoint or is between endpoints
+     */
     public Boolean contains(Date instant) {
         if (instant == null) {                     // if input is null,
             return false                           // output is false.
@@ -69,6 +119,12 @@ class Interval {
         }
     }
 
+    /**
+     * Does this Interval overlap the input Interval?
+     *
+     * @param that the Interval this is being compared to
+     * @return     true if this Interval contains any date that Interval contains
+     */
     public Boolean overlaps(Interval that) {
         Boolean thisIsInterval = this.isInterval()
         Boolean thatIsInterval = that.isInterval()

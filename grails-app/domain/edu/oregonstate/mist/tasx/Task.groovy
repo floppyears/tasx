@@ -69,6 +69,11 @@ class Task {
         schedule.setNull()
     }
 
+    /**
+     * Test whether the task is scheduled.
+     *
+     * @return true if the task is scheduled
+     */
     public Boolean isScheduled() {
         Boolean thisTaskIsScheduled = !schedule.isNull()
         Boolean aSubTaskIsScheduled = subTasks.find({ it.isScheduled() })
@@ -76,6 +81,12 @@ class Task {
         return thisTaskIsScheduled || aSubTaskIsScheduled
     }
 
+    /**
+     * Test whether the task is scheduled during the input Interval.
+     *
+     * @param when an interval
+     * @return     true if the task is scheduled during input Interval
+     */
     public Boolean isScheduled(Interval when) {
         Boolean    taskScheduleOverlaps = schedule.overlaps(when)
         Boolean subTaskScheduleOverlaps = subTasks.find({ it.getSchedule().overlaps(when) })
@@ -83,6 +94,11 @@ class Task {
         return isScheduled() && (taskScheduleOverlaps || subTaskScheduleOverlaps)
     }
 
+    /**
+     * Test whether this Task has subTasks.
+     *
+     * @return true if the set of subTasks is null or empty
+     */
     public Boolean hasSubTasks() {
         return subTasks && !subTasks.isEmpty()
     }
