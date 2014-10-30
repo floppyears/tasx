@@ -12,10 +12,6 @@ class Interval {
         setInterval(from, to)
     }
 
-    public Interval() {
-        setInterval(null, null)
-    }
-
     public void setAt(Date at) { // time: -----|----->
         setInterval(at, at)
     }
@@ -47,6 +43,10 @@ class Interval {
 
     public Boolean isInterval() {
         return from != to
+    }
+
+    public void setNull() {
+        setInterval(null, null)
     }
 
     public Boolean isNull() {

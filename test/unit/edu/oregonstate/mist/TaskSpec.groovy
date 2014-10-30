@@ -15,6 +15,7 @@ class TaskSpec extends Specification {
     final Interval AN_INTERVAL = new Interval(FROM, TO)
     final Integer PRIORITY = 5
     Task testTask
+    Task testSubTask
 
     def setup() {
     }
@@ -83,6 +84,19 @@ class TaskSpec extends Specification {
             testTask.isScheduled(AN_INTERVAL) == false
     }
 
+    void "task is scheduled if subTask is scheduled"() {
+        given:
+            testTask = new Task()
+            testSubTask = new Task()
+            testSubTask.setSchedule(AN_INTERVAL)
+
+        when:
+            testTask.addToSubTasks(testSubTask)
+        then:
+            testTask.isScheduled() == true
+            testTask.isScheduled(AN_INTERVAL) == true
+    }
+
     void "set and get task priority"() {
         given:
             testTask = new Task()
@@ -140,5 +154,16 @@ class TaskSpec extends Specification {
             testTask.isComplete() == false
             testTask.isCancelled() == false
             testTask.isDeleted() == true
+    }
+
+    void "add subtasks"() {
+        given:
+            testTask = new Task()
+            testSubTask = new Task()
+
+        when:
+            testTask.addToSubTasks(testSubTask)
+        then:
+            testTask.hasSubTasks()
     }
 }

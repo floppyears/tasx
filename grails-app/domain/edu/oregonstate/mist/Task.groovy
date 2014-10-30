@@ -4,7 +4,7 @@ class Task {
 
     static constraints = {}
 
-    static hasMany = [prereqs: Task]
+    static hasMany = [subTasks: Task]
     static belongsTo = [user: User]
 
     private static enum Status { TODO, DONE, CANCELLED, DELETED }
@@ -14,9 +14,13 @@ class Task {
     Integer priority
     private Status status
 
+    public Task() {
+        this("")
+    }
+
     public Task(String description) {
         this.description = description
-        this.setUnscheduled()
+        this.schedule = new Interval()
         priority = 0
         this.setStatusIncomplete()
     }
@@ -62,14 +66,24 @@ class Task {
     }
 
     public void setUnscheduled() {
-        schedule = null
+        schedule.setNull()
     }
 
     public Boolean isScheduled() {
-        return schedule != null && !schedule.isNull()
+        Boolean thisTaskIsScheduled = !schedule.isNull()
+        Boolean aSubTaskIsScheduled = subTasks.find({ it.isScheduled() })
+
+        return thisTaskIsScheduled || aSubTaskIsScheduled
     }
 
     public Boolean isScheduled(Interval when) {
-        return isScheduled() && schedule.overlaps(when)
+        Boolean    taskScheduleOverlaps = schedule.overlaps(when)
+        Boolean subTaskScheduleOverlaps = subTasks.find({ it.getSchedule().overlaps(when) })
+
+        return isScheduled() && (taskScheduleOverlaps || subTaskScheduleOverlaps)
+    }
+
+    public Boolean hasSubTasks() {
+        return subTasks && !subTasks.isEmpty()
     }
 }
