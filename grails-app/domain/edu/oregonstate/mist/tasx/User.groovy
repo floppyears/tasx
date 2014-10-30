@@ -1,4 +1,4 @@
-package edu.oregonstate.mist
+package edu.oregonstate.mist.tasx
 
 import java.security.MessageDigest
 
