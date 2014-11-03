@@ -6,6 +6,8 @@ class User {
 
     static constraints = {
         email(email:true)
+        name([blank: false,
+              unique: true])
         passwordTemp([minSize: 10,         // password has at least 10 characters
                       matches: ".*\\d.*",  // and at least 1 digit
                       blank: false])
@@ -28,7 +30,7 @@ class User {
         passwordTemp = null
     }
 
-    private String userName
+    String name
     String email
     String passwordTemp
     String passwordConf
