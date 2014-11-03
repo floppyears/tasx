@@ -5,9 +5,10 @@ import java.security.MessageDigest
 class User {
 
     static constraints = {
-        email(email:true)
         name([blank: false,
               unique: true])
+        email([email: true,
+               blank: false])
         passwordTemp([minSize: 10,         // password has at least 10 characters
                       matches: ".*\\d.*",  // and at least 1 digit
                       blank: false])
