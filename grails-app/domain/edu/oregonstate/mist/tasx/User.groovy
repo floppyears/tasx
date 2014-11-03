@@ -7,12 +7,17 @@ class User {
     static constraints = {
         email(email:true)
         passwordTemp([minSize: 10,         // password has at least 10 characters
-                      matches: ".*\\d.*"]) // and at least 1 digit
+                      matches: ".*\\d.*",  // and at least 1 digit
+                      blank: false])
+        passwordConf([validator: { c, o ->
+                                   c.equals(o.passwordTemp) ?
+                                   true :
+                                   'tasx.user.register.error.password-mismatch' } ])
     }
 
     static hasMany = [tasks: Task]
 
-    static transients = ["passwordTemp"]
+    static transients = ["passwordTemp", "passwordConf"]
 
     void beforeInsert() {
         beforeUpdate()
@@ -26,21 +31,18 @@ class User {
     private String userName
     String email
     String passwordTemp
+    String passwordConf
     private String passwordHash
 
-    public User(String name, String email, String password) {
-        userName = name
-        this.email = email
-        this.setPassword(password)
+    public User(String name, String email) {
+        setName(name)
+        setEmail(email)
     }
 
-    /**
-     * Get the userName (which cannot be set after instantiation).
-     *
-     * @return userName
-     */
-    public String getName() {
-        return userName
+    public User(String name, String email, String password) {
+        setName(name)
+        setEmail(email)
+        setPassword(password)
     }
 
     /**
@@ -52,8 +54,13 @@ class User {
      * @param password
      */
     public void setPassword(String password) {
+        setPassword(password, password)
+    }
+
+    public void setPassword(String password, String confirmPassword) {
         passwordHash = null
         passwordTemp = password
+        passwordConf = confirmPassword
     }
 
     /**
