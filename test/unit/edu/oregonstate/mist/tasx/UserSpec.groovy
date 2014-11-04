@@ -23,7 +23,8 @@ class UserSpec extends Specification {
 
     void "initialize user"() {
         when:
-            User testUser = new User(NAME, EMAIL, PASSWORD)
+            User testUser = new User(NAME, EMAIL)
+            testUser.setPassword(PASSWORD, PASSWORD)
         then:
             testUser.getName() == NAME
             testUser.getEmail() == EMAIL
@@ -32,7 +33,8 @@ class UserSpec extends Specification {
 
     void "mutate user"() {
         given:
-            User testUser = new User(NAME, EMAIL, PASSWORD)
+            User testUser = new User(NAME, EMAIL)
+            testUser.setPassword(PASSWORD, PASSWORD)
 
         when:
             testUser.setEmail(NEW_EMAIL)
@@ -40,7 +42,7 @@ class UserSpec extends Specification {
             testUser.getEmail() == NEW_EMAIL
 
         when:
-            testUser.setPassword(NEW_PASSWORD)
+            testUser.setPassword(NEW_PASSWORD, NEW_PASSWORD)
         then:
             testUser.passwordEquals(NEW_PASSWORD)
     }
@@ -58,7 +60,8 @@ class UserSpec extends Specification {
 
     void "validate password"() {
         given:
-            User testUser = new User(NAME, EMAIL, password)
+            User testUser = new User(NAME, EMAIL)
+            testUser.setPassword(password, password)
 
         expect:
             testUser.validate(["passwordTemp"]) == result
@@ -80,7 +83,8 @@ class UserSpec extends Specification {
 
     void "only store password hash"() {
         given:
-            User testUser = new User(NAME, EMAIL, PASSWORD)
+            User testUser = new User(NAME, EMAIL)
+            testUser.setPassword(PASSWORD, PASSWORD)
 
         when:
             testUser.save(flush: true)
@@ -92,7 +96,8 @@ class UserSpec extends Specification {
 
     void "validate email"() {
         given:
-            User testUser = new User(NAME, email, PASSWORD)
+            User testUser = new User(NAME, email)
+            testUser.setPassword(PASSWORD, PASSWORD)
 
         expect:
             testUser.validate(["email"]) == result
