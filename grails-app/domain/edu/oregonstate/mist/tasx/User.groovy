@@ -43,10 +43,6 @@ class User {
         setEmail(email)
     }
 
-    public void setPassword(String password) {
-        setPassword(password, password)
-    }
-
     public void setPassword(String password, String confirmPassword) {
         passwordHash = null
         passwordTemp = password
