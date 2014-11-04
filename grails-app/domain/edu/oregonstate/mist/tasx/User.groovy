@@ -43,12 +43,6 @@ class User {
         setEmail(email)
     }
 
-    public User(String name, String email, String password) {
-        setName(name)
-        setEmail(email)
-        setPassword(password)
-    }
-
     public void setPassword(String password) {
         setPassword(password, password)
     }
