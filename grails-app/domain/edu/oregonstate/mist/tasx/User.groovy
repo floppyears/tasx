@@ -29,6 +29,7 @@ class User {
     void beforeUpdate() {
         passwordHash = hash(passwordTemp)
         passwordTemp = null
+        passwordConf = null
     }
 
     String name
