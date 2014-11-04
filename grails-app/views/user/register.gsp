@@ -25,19 +25,19 @@
     <form action="/tasx/user/register" method="post">
         <table>
             <tr>
-                <td>${g.message(code: "tasx.user.register.name")}</td>
+                <td><label for="name">${g.message(code: "tasx.user.register.name")}</label></td>
                 <td><input type="text" name="name" id="name" value="${user.getName()}" /></td>
             </tr>
             <tr>
-                <td>${g.message(code: "tasx.user.register.email")}</td>
+                <td><label for="email">${g.message(code: "tasx.user.register.email")}</label></td>
                 <td><input type="email" name="email" id="email" value="${user.getEmail()}" /></td>
             </tr>
             <tr>
-                <td>${g.message(code: "tasx.user.register.password")}</td>
+                <td><label for="pass1">${g.message(code: "tasx.user.register.password")}</label></td>
                 <td><input type="password" name="pass1" id="pass1" /></td>
             </tr>
             <tr>
-                <td>${g.message(code: "tasx.user.register.confirm-password")}</td>
+                <td><label for="pass2">${g.message(code: "tasx.user.register.confirm-password")}</label></td>
                 <td><input type="password" name="pass2" id="pass2" /></td>
             </tr>
             <tr>
