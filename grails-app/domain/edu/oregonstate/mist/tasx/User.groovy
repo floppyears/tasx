@@ -38,11 +38,6 @@ class User {
     String passwordConf
     private String passwordHash
 
-    public User(String name, String email) {
-        setName(name)
-        setEmail(email)
-    }
-
     public void setPassword(String password, String confirmPassword) {
         passwordHash = null
         passwordTemp = password
