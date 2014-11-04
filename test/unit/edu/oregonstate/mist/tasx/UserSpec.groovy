@@ -23,7 +23,7 @@ class UserSpec extends Specification {
 
     void "initialize user"() {
         when:
-            User testUser = new User(NAME, EMAIL)
+            User testUser = new User([name: NAME, email: EMAIL])
             testUser.setPassword(PASSWORD, PASSWORD)
         then:
             testUser.getName() == NAME
@@ -33,7 +33,7 @@ class UserSpec extends Specification {
 
     void "mutate user"() {
         given:
-            User testUser = new User(NAME, EMAIL)
+            User testUser = new User([name: NAME, email: EMAIL])
             testUser.setPassword(PASSWORD, PASSWORD)
 
         when:
@@ -60,7 +60,7 @@ class UserSpec extends Specification {
 
     void "validate password"() {
         given:
-            User testUser = new User(NAME, EMAIL)
+            User testUser = new User([name: NAME, email: EMAIL])
             testUser.setPassword(password, password)
 
         expect:
@@ -83,7 +83,7 @@ class UserSpec extends Specification {
 
     void "only store password hash"() {
         given:
-            User testUser = new User(NAME, EMAIL)
+            User testUser = new User([name: NAME, email: EMAIL])
             testUser.setPassword(PASSWORD, PASSWORD)
 
         when:
@@ -96,7 +96,7 @@ class UserSpec extends Specification {
 
     void "validate email"() {
         given:
-            User testUser = new User(NAME, email)
+            User testUser = new User([name: NAME, email: email])
             testUser.setPassword(PASSWORD, PASSWORD)
 
         expect:
