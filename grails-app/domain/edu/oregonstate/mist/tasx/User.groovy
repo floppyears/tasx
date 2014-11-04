@@ -43,20 +43,6 @@ class User {
         setEmail(email)
     }
 
-    public User(String name, String email, String password) {
-        setName(name)
-        setEmail(email)
-        setPassword(password)
-    }
-
-    /**
-     * Set the password.
-     *
-     * The plaintext password will be stored in a temporary variable until the
-     * User is inserted or updated, at which point it will be hashed and saved.
-     *
-     * @param password
-     */
     public void setPassword(String password) {
         setPassword(password, password)
     }
