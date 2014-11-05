@@ -26,11 +26,11 @@
         <table>
             <tr>
                 <td><label for="name">${g.message(code: "tasx.user.register.name")}</label></td>
-                <td><input type="text" name="name" id="name" value="${user.getName()}" /></td>
+                <td><input type="text" name="name" id="name" value="${user?.getName()}" /></td>
             </tr>
             <tr>
                 <td><label for="email">${g.message(code: "tasx.user.register.email")}</label></td>
-                <td><input type="email" name="email" id="email" value="${user.getEmail()}" /></td>
+                <td><input type="email" name="email" id="email" value="${user?.getEmail()}" /></td>
             </tr>
             <tr>
                 <td><label for="pass1">${g.message(code: "tasx.user.register.password")}</label></td>
