@@ -16,6 +16,7 @@ class User {
                                    c.equals(o.passwordTemp) ?
                                    true :
                                    'tasx.user.register.error.password-mismatch' } ])
+        passwordHash([nullable: true])
     }
 
     static hasMany = [tasks: Task]
@@ -36,7 +37,7 @@ class User {
     String email
     String passwordTemp
     String passwordConf
-    private String passwordHash
+    String passwordHash
 
     public void setPassword(String password, String confirmPassword) {
         passwordHash = null
