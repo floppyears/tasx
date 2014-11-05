@@ -19,4 +19,9 @@ class UserController {
 
         return [ user: newUser ]
     }
+
+    Map account() {
+        // TODO: if not authenticated, redirect to login or register
+        return [user: User.get(params.id)]
+    }
 }
