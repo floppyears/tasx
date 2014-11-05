@@ -12,7 +12,9 @@ class UserController {
         newUser.setPassword(params.pass1, params.pass2)
 
         if (newUser.validate()) {
-            redirect(action: "account")
+            newUser.save()
+            // TODO: authenticate, then
+            redirect(action: "account", params: [id: newUser.id])
         }
 
         return [ user: newUser ]
