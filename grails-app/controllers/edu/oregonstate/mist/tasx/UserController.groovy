@@ -20,6 +20,21 @@ class UserController {
         return [ user: newUser ]
     }
 
+    Map login() {
+        User user = null
+
+        if (params.name && params.password) {
+            user = User.findByName(params.name)
+
+            if (user && user.passwordEquals(params.password)) {
+                // TODO: authenticate, then
+                redirect(action: "account", params: [id: user.id])
+            }
+        }
+
+        return [user: user]
+    }
+
     Map account() {
         // TODO: if not authenticated, redirect to login or register
         return [user: User.get(params.id)]
