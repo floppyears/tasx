@@ -2,7 +2,9 @@ package edu.oregonstate.mist.tasx
 
 class UserController {
 
-    static defaultAction = ""
+    static defaultAction = "index"
+
+    static scaffold = true
 
     Map register() {
         User newUser = new User([name: params.name, email: params.email])
