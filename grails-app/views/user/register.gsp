@@ -1,19 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>${g.message(code: "tasx.user.register.title")}</title>
-    <style type="text/css">
-        #registration-form tr td:first-child {
-            text-align: right;
-        }
-    </style>
-    <%-- include bootstrap --%>
-</head>
-<body>
-
-<div id="welcome">
-    ${g.message(code: "tasx.user.register.welcome")}
-</div>
+<g:render template="header" model="[action: 'register']" />
 
 <g:hasErrors bean="${user}">
     <div class="errors">
@@ -48,5 +33,4 @@
     </form>
 </div>
 
-</body>
-</html>
+<g:render template="footer" />

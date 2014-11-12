@@ -1,18 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>${g.message(code: "tasx.user.login.title")}</title>
-    <style type="text/css">
-    #login-form tr td:first-child {
-        text-align: right;
-    }
-    </style>
-</head>
-<body>
+<g:render template="header" model="[action: 'login']" />
 
-<div id="welcome">
-    ${g.message(code: "tasx.user.login.welcome")}
-</div>
 
 <div id="login-form">
     <form action="/tasx/user/login" method="post">
@@ -32,5 +19,4 @@
     </form>
 </div>
 
-</body>
-</html>
+<g:render template="footer" />
