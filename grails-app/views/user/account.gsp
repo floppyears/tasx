@@ -10,8 +10,8 @@
 </div>
 
 <table>
-    <tr><td>Name:</td><td>${user?.getName()}</td></tr>
-    <tr><td>Email:</td><td>${user?.getEmail()}</td></tr>
+    <tr><td>Name:</td><td>${user?.name}</td></tr>
+    <tr><td>Email:</td><td>${user?.email}</td></tr>
 </table>
 
 </body>
