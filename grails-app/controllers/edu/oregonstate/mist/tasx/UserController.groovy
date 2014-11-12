@@ -12,9 +12,10 @@ class UserController {
         if (params.submitting) {
             user = new User([name: params.name, email: params.email])
             user.setPassword(params.pass1, params.pass2)
+
             if (user.save()) {
-                // TODO: authenticate, then
-                redirect(action: "account", params: [id: user.id])
+                session["user"] = user
+                redirect(action: "account")
             }
         }
 
@@ -30,8 +31,8 @@ class UserController {
             user = User.findByName(params.name)
 
             if (user && user.passwordEquals(params.password)) {
-                // TODO: authenticate, then
-                redirect(action: "account", params: [id: user.id])
+                session["user"] = user
+                redirect(action: "account")
             }
         }
 
@@ -39,7 +40,10 @@ class UserController {
     }
 
     Map account() {
-        // TODO: if not authenticated, redirect to login or register
-        return [user: User.get(params.id)]
+        if (!session["user"]) {
+            redirect(action: "login")
+        }
+
+        return [user: session["user"]]
     }
 }
