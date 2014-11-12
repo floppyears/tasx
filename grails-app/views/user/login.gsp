@@ -1,22 +1,18 @@
 <g:render template="header" model="[action: 'login']" />
 
 
-<div id="login-form">
-    <form action="/tasx/user/login" method="post">
-        <table>
-            <tr>
-                <td><label for="name">${g.message(code: "tasx.user.login.name")}</label></td>
-                <td><input type="text" name="name" id="name" /></td>
-            </tr>
-            <tr>
-                <td><label for="password">${g.message(code: "tasx.user.login.password")}</label></td>
-                <td><input type="password" name="password" id="password" /></td>
-            </tr>
-            <tr>
-                <td colspan="2"><input type="submit" name="submit" value="${g.message(code: 'tasx.user.login.submit')}" /></td>
-            </tr>
-        </table>
-    </form>
-</div>
+<form action="/tasx/user/login" method="post" role="form">
+    <div class="form-group">
+        <label for="name">${g.message(code: "tasx.user.login.name")}</label>
+        <input type="text" name="name" id="name" />
+    </div>
+    <div class="form-group">
+        <label for="password">${g.message(code: "tasx.user.login.password")}</label>
+        <input type="password" name="password" id="password" />
+    </div>
+    <button type="submit" class="btn btn-default" name="submit">
+        ${g.message(code: 'tasx.user.login.submit')}
+    </button>
+</form>
 
 <g:render template="footer" />
