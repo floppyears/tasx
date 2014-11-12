@@ -7,17 +7,20 @@ class UserController {
     static scaffold = true
 
     Map register() {
-        User newUser = new User([name: params.name, email: params.email])
+        User user = null
 
-        newUser.setPassword(params.pass1, params.pass2)
-
-        if (newUser.validate()) {
-            newUser.save()
-            // TODO: authenticate, then
-            redirect(action: "account", params: [id: newUser.id])
+        if (params.submitting) {
+            user = new User([name: params.name, email: params.email])
+            user.setPassword(params.pass1, params.pass2)
+            if (user.save()) {
+                // TODO: authenticate, then
+                redirect(action: "account", params: [id: user.id])
+            }
         }
 
-        return [ user: newUser ]
+        params.submitting = false
+
+        return [ user: user, params: params ]
     }
 
     Map login() {

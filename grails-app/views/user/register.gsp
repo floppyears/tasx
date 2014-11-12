@@ -41,6 +41,7 @@
                 <td><input type="password" name="pass2" id="pass2" /></td>
             </tr>
             <tr>
+                <input type="hidden" name="submitting" value="true" />
                 <td colspan="2"><input type="submit" name="submit" value="${g.message(code: 'tasx.user.register.submit')}" /></td>
             </tr>
         </table>
