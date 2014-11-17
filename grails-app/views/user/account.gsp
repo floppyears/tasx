@@ -1,18 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>${g.message(code: "tasx.user.account.title")}</title>
-</head>
-<body>
-
-<div id="welcome">
-    ${g.message(code: "tasx.user.account.welcome")}
-</div>
+<g:render template="header" model="[action: 'account']" />
 
 <table>
-    <tr><td>Name:</td><td>${user?.getName()}</td></tr>
-    <tr><td>Email:</td><td>${user?.getEmail()}</td></tr>
+    <tr><td>Name:</td><td>${user?.name}</td></tr>
+    <tr><td>Email:</td><td>${user?.email}</td></tr>
 </table>
 
-</body>
-</html>
+<g:render template="footer" />

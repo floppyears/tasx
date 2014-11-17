@@ -2,22 +2,26 @@ package edu.oregonstate.mist.tasx
 
 class UserController {
 
-    static defaultAction = "index"
+    static defaultAction = "account"
 
-    static scaffold = true
+    static scaffold = false
 
     Map register() {
-        User newUser = new User([name: params.name, email: params.email])
+        User user = null
 
-        newUser.setPassword(params.pass1, params.pass2)
+        if (params.submitting) {
+            user = new User([name: params.name, email: params.email])
+            user.setPassword(params.pass1, params.pass2)
 
-        if (newUser.validate()) {
-            newUser.save()
-            // TODO: authenticate, then
-            redirect(action: "account", params: [id: newUser.id])
+            if (user.save()) {
+                session["user"] = user
+                redirect(action: "account")
+            }
         }
 
-        return [ user: newUser ]
+        params.submitting = false
+
+        return [ user: user, params: params ]
     }
 
     Map login() {
@@ -27,8 +31,8 @@ class UserController {
             user = User.findByName(params.name)
 
             if (user && user.passwordEquals(params.password)) {
-                // TODO: authenticate, then
-                redirect(action: "account", params: [id: user.id])
+                session["user"] = user
+                redirect(action: "account")
             }
         }
 
@@ -36,7 +40,10 @@ class UserController {
     }
 
     Map account() {
-        // TODO: if not authenticated, redirect to login or register
-        return [user: User.get(params.id)]
+        if (!session["user"]) {
+            redirect(action: "login")
+        }
+
+        return [user: session["user"]]
     }
 }
