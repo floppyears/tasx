@@ -7,16 +7,16 @@ class Task {
     static hasMany = [subTasks: Task]
     static belongsTo = [user: User]
 
-    private static enum Status { TODO, DONE, CANCELLED, DELETED }
-
     static mapping = {
         table "TasxTask"
     }
 
+    static enum Status { TODO, DONE, CANCELLED, DELETED }
+
     String description
     Interval schedule
     Integer priority
-    private Status status
+    Status status
 
     public Task() {
         this("")
