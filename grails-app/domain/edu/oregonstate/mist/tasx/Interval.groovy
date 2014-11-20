@@ -8,6 +8,10 @@ class Interval {
     private Date from
     private Date to
 
+    static mapping = {
+        table "TasxInterval"
+    }
+
     public Interval(Date from, Date to) {
         setInterval(from, to)
     }

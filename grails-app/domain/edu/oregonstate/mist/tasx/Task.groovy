@@ -9,6 +9,10 @@ class Task {
 
     private static enum Status { TODO, DONE, CANCELLED, DELETED }
 
+    static mapping = {
+        table "TasxTask"
+    }
+
     String description
     Interval schedule
     Integer priority
