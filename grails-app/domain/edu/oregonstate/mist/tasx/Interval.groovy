@@ -5,12 +5,12 @@ class Interval {
     static constraints = {
     }
 
-    private Date from
-    private Date to
-
     static mapping = {
         table "TasxInterval"
     }
+
+    Date fromDate
+    Date toDate
 
     public Interval(Date from, Date to) {
         setInterval(from, to)
@@ -23,7 +23,7 @@ class Interval {
      *
      * @param at any Date
      */
-    public void setAt(Date at) {
+    public void doSetAt(Date at) {
         setInterval(at, at)
     }
 
@@ -58,16 +58,8 @@ class Interval {
      * @param to   the upper bound
      */
     public void setInterval(Date from, Date to) {
-        this.from = from
-        this.to = to
-    }
-
-    public Date getFrom() {
-        return from
-    }
-
-    public Date getTo() {
-        return to
+        fromDate = from
+        toDate = to
     }
 
     /**
@@ -75,8 +67,8 @@ class Interval {
      *
      * @return either the lower bound or the upper bound
      */
-    public Date getAt() {
-        return to
+    public Date doGetAt() {
+        return toDate
     }
 
     /**
@@ -85,7 +77,7 @@ class Interval {
      * @return true if endpoints are not equal
      */
     public Boolean isInterval() {
-        return from != to
+        return fromDate != toDate
     }
 
     public void setNull() {
@@ -98,7 +90,7 @@ class Interval {
      * @return true if both endpoints equal null
      */
     public Boolean isNull() {
-        return from == null && to == null
+        return fromDate == null && toDate == null
     }
 
     /**
@@ -111,14 +103,14 @@ class Interval {
         if (instant == null) {                     // if input is null,
             return false                           // output is false.
         } else if (!isInterval()) {                // if this is not an interval,
-            return instant == getAt()              // does instant equal it?
+            return instant == doGetAt()              // does instant equal it?
         } else {                                   // this is an interval.
-            if (from == null) {                         // if this interval is bounded above,
-                return instant <= to                    // is instant less than or equal to upper bound?
-            } else if (to == null) {                    // if this interval is bounded below,
-                return from <= instant                  // is this instant greater than or equal to lower bound?
+            if (fromDate == null) {                         // if this interval is bounded above,
+                return instant <= toDate                    // is instant less than or equal to upper bound?
+            } else if (toDate == null) {                    // if this interval is bounded below,
+                return fromDate <= instant                  // is this instant greater than or equal to lower bound?
             } else {                                    // if this interval is closed,
-                return from <= instant && instant <= to // is instant between lower and upper bounds?
+                return fromDate <= instant && instant <= toDate // is instant between lower and upper bounds?
             }
         }
     }
@@ -136,13 +128,13 @@ class Interval {
         if (this.isNull() || that.isNull()) {
             return false
         } else if (!thisIsInterval && !thatIsInterval) {
-            return this.getAt() == that.getAt() && this.getAt() != null
+            return this.doGetAt() == that.doGetAt() && this.doGetAt() != null
         } else if (thisIsInterval && !thatIsInterval) {
-            return this.contains(that.getAt())
+            return this.contains(that.doGetAt())
         } else if (!thisIsInterval && thatIsInterval) {
-            return that.contains(this.getAt())
+            return that.contains(this.doGetAt())
         } else { // thisIsInterval && thatIsInterval
-            return this.contains(that.getFrom()) || this.contains(that.getTo())
+            return this.contains(that.fromDate) || this.contains(that.toDate)
         }
     }
 }
