@@ -2,13 +2,12 @@ package edu.oregonstate.mist.tasx
 
 class TaskController {
 
-    static defaultAction = "index"
+    static defaultAction = "list"
 
-    static scaffold = true
+    static scaffold = false
 
     Map details() {
-        User user = (User)session["user"] ?:
-                    redirect([controller: "user", action: "login"])
+        User user = getUserOrLogin()
 
         Task task = Task.get(params.id) ?:
                     new Task()
@@ -52,7 +51,42 @@ class TaskController {
     }
 
     Map list() {
+        User user = getUserOrLogin()
 
+        List taskList = Task.findAllWhere([user: user])
+
+        return [ taskList: taskList,
+                 formatStatus: {
+                     status ->
+                         switch(status) {
+                             case Task.Status.TODO:
+                                 "todo:"
+                                 break
+                             case Task.Status.DONE:
+                                 "done:"
+                                 break
+                             case Task.Status.CANCELLED:
+                                 "canc:"
+                                 break
+                             case Task.Status.DELETED:
+                             default:
+                                 "dele:"
+                                 break
+                         }
+                 },
+                 formatDescription: {
+                     String description ->
+                         String firstLine = description.split("\n")[0]
+
+                         Integer length = firstLine.length()
+                         Integer    max = 100
+                         Integer  index = (length < max) ? length : max
+
+                         String summary = firstLine.substring(0, index)
+
+                         return summary
+                 }
+               ]
     }
 
     private final String DATEFORMAT = "MM/dd/yyyy"
@@ -75,5 +109,10 @@ class TaskController {
                 default:
                     return Task.Status.TODO
             }
+    }
+
+    private User getUserOrLogin() {
+        return (User)session["user"] ?:
+               redirect([controller: "user", action: "login"])
     }
 }
