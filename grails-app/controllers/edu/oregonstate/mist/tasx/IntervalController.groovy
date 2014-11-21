@@ -4,5 +4,5 @@ class IntervalController {
 
     def index() { }
 
-    static scaffold = true
+    static scaffold = false
 }
