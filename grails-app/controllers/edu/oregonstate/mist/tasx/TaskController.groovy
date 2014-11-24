@@ -29,23 +29,13 @@ class TaskController {
             task.save([flush:true])
             redirect([action: "details", id: task.id])
         } else {
-            [ params: params,
-              selectStatus: {
-                  option ->
-                      if ((option.equals("todo") && task.isIncomplete()) ||
-                          (option.equals("done") && task.isComplete())   ||
-                          (option.equals("canc") && task.isCancelled())  ||
-                          (option.equals("dele") && task.isDeleted())) {
-                          return " selected=selected"
-                      } else {
-                          return ""
-                      }
-              },
-              description: task.description,
-              from: task.schedule?.fromDate?.format(DATEFORMAT),
-              to: task.schedule?.toDate?.format(DATEFORMAT),
-              priority: task.priority,
-              id: task.id
+            return [ params:       params,
+                     selectStatus: detailsSelectStatus(task),
+                     description:  task.description,
+                     from:         task.schedule?.fromDate?.format(DATEFORMAT),
+                     to:           task.schedule?.toDate?.format(DATEFORMAT),
+                     priority:     task.priority,
+                     id:           task.id
             ]
         }
     }
@@ -56,63 +46,78 @@ class TaskController {
         List taskList = Task.findAllWhere([user: user])
 
         return [ taskList: taskList,
-                 formatStatus: {
-                     status ->
-                         switch(status) {
-                             case Task.Status.TODO:
-                                 "todo:"
-                                 break
-                             case Task.Status.DONE:
-                                 "done:"
-                                 break
-                             case Task.Status.CANCELLED:
-                                 "canc:"
-                                 break
-                             case Task.Status.DELETED:
-                             default:
-                                 "dele:"
-                                 break
-                         }
-                 },
-                 formatDescription: {
-                     String description ->
-                         String firstLine = description.split("\n")[0]
-
-                         Integer length = firstLine.length()
-                         Integer    max = 100
-                         Integer  index = (length < max) ? length : max
-
-                         String summary = firstLine.substring(0, index)
-
-                         return summary
-                 }
-               ]
+                 formatStatus: listFormatStatus,
+                 formatDescription: listFormatDescription
+        ]
     }
 
     private final String DATEFORMAT = "MM/dd/yyyy"
 
-    private Closure stringToDate = {
-        dateString ->
-            Date.parse(DATEFORMAT, dateString)
+    private Date stringToDate(String dateString) {
+        return Date.parse(DATEFORMAT, dateString)
     }
 
-    private Closure stringToStatus = {
-        statusString ->
-            switch(statusString) {
-                case "done":
-                    return Task.Status.DONE
-                case "canc":
-                    return Task.Status.CANCELLED
-                case "dele":
-                    return Task.Status.DELETED
-                case "todo":
-                default:
-                    return Task.Status.TODO
-            }
+    private static Task.Status stringToStatus(String statusString) {
+        switch(statusString) {
+            case "done": return Task.Status.DONE
+            case "canc": return Task.Status.CANCELLED
+            case "dele": return Task.Status.DELETED
+            case "todo":
+                default: return Task.Status.TODO
+        }
     }
 
     private User getUserOrLogin() {
         return (User)session["user"] ?:
                redirect([controller: "user", action: "login"])
+    }
+
+    private static String readUntilNewline(String string) {
+        return string.split("\n")[0]
+    }
+
+    private static Closure detailsSelectStatus(Task task) {
+        return {
+            option ->
+                if ((option.equals("todo") && task.isIncomplete()) ||
+                    (option.equals("done") && task.isComplete())   ||
+                    (option.equals("canc") && task.isCancelled())  ||
+                    (option.equals("dele") && task.isDeleted())) {
+                    return " selected=selected"
+                } else {
+                    return ""
+                }
+        }
+    }
+
+    private Closure listFormatStatus = {
+        status ->
+            switch(status) {
+                case Task.Status.TODO:
+                    "todo:"
+                    break
+                case Task.Status.DONE:
+                    "done:"
+                    break
+                case Task.Status.CANCELLED:
+                    "canc:"
+                    break
+                case Task.Status.DELETED:
+                default:
+                    "dele:"
+                    break
+            }
+    }
+
+    private Closure listFormatDescription = {
+        String description ->
+            String firstLine = readUntilNewline(description)
+
+            Integer length = firstLine.length()
+            Integer    max = 100
+            Integer  index = (length < max) ? length : max
+            String summary = firstLine.substring(0, index)
+
+            return summary
     }
 }
