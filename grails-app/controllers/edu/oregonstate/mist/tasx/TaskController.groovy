@@ -6,6 +6,11 @@ class TaskController {
 
     static scaffold = false
 
+    /**
+     * Create, update, or read a task
+     *
+     * @return  task view model
+     */
     Map details() {
         User user = getUserOrLogin()
 
@@ -40,6 +45,11 @@ class TaskController {
         }
     }
 
+    /**
+     * Display a list of tasks
+     *
+     * @return  task list view model
+     */
     Map list() {
         User user = getUserOrLogin()
 
