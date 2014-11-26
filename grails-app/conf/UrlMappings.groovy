@@ -10,6 +10,8 @@ class UrlMappings {
         "/"(view:"/index")
         "500"(view:'/error')
 
-        "/rest/user"(resources: 'userRest')
+        "/rest/user"(resources: 'userRest') {
+            "/task"(resources: 'taskRest')
+        }
 	}
 }
