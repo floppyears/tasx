@@ -19,17 +19,17 @@ class TaskController {
 
         if (params.submitting) {
             Date from = stringToDate(params.from)
-            Date to   = stringToDate(params.to)
+            Date to = stringToDate(params.to)
 
             Interval schedule = task.schedule
             schedule.setInterval(from, to)
             schedule.save()
 
             task.description = params.description
-            task.schedule    = schedule
-            task.priority    = Integer.parseInt(params.priority)
-            task.status      = stringToStatus(params.status)
-            task.user        = user
+            task.schedule = schedule
+            task.priority = Integer.parseInt(params.priority)
+            task.status = stringToStatus(params.status)
+            task.user = user
 
             task.save([flush:true])
             redirect([action: "details", id: task.id])
@@ -124,8 +124,8 @@ class TaskController {
             String firstLine = readUntilNewline(description)
 
             Integer length = firstLine.length()
-            Integer    max = 100
-            Integer  index = (length < max) ? length : max
+            Integer max = 100
+            Integer index = (length < max) ? length : max
             String summary = firstLine.substring(0, index)
 
             return summary
