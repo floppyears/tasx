@@ -56,9 +56,7 @@ class TaskController {
         List taskList = Task.findAllWhere([user: user])
 
         return [ taskList: taskList,
-                 formatStatus: listFormatStatus,
-                 formatDescription: listFormatDescription
-        ]
+                 formatStatus: listFormatStatus ]
     }
 
     private final String DATEFORMAT = "MM/dd/yyyy"
@@ -80,10 +78,6 @@ class TaskController {
     private User getUserOrLogin() {
         return (User)session["user"] ?:
                redirect([controller: "user", action: "login"])
-    }
-
-    private static String readUntilNewline(String string) {
-        return string.split("\n")[0]
     }
 
     private static Closure detailsSelectStatus(Task task) {
@@ -117,17 +111,5 @@ class TaskController {
                     "dele:"
                     break
             }
-    }
-
-    private Closure listFormatDescription = {
-        String description ->
-            String firstLine = readUntilNewline(description)
-
-            Integer length = firstLine.length()
-            Integer max = 100
-            Integer index = (length < max) ? length : max
-            String summary = firstLine.substring(0, index)
-
-            return summary
     }
 }

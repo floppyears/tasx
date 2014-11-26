@@ -84,4 +84,19 @@ class Task {
     public Boolean hasSubTasks() {
         return subTasks && !subTasks.isEmpty()
     }
+
+    public String descriptionSummary() {
+        String firstLine = readUntilNewline(description)
+
+        Integer length = firstLine.length()
+        Integer max = 100
+        Integer index = (length < max) ? length : max
+        String summary = firstLine.substring(0, index)
+
+        return summary
+    }
+
+    private static String readUntilNewline(String string) {
+        return string.split("\n")[0]
+    }
 }

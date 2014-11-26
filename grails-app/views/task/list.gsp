@@ -12,7 +12,7 @@
             </td>
             <td>
                 <a href="/tasx/task/details/${task.id}">
-                    ${formatDescription(task.description)}
+                    ${task.descriptionSummary()}
                 </a>
             </td>
         </tr>
