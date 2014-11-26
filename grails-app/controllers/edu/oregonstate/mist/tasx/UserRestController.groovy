@@ -29,9 +29,13 @@ class UserRestController {
 
     private Closure serializeUser = {
         user ->
-            [ id:    user.id,
-              name:  user.name,
-              email: user.email,
-              tasks: user.tasks ]
+            if (user) {
+                return [ id:    user.id,
+                         name:  user.name,
+                         email: user.email,
+                         tasks: user.tasks ]
+            } else {
+                return []
+            }
     }
 }
