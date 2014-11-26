@@ -29,7 +29,7 @@ class TaskRestController {
     def show(Task task) {
         User user = User.get(params.userRestId)
 
-        respond(Task.findWhere([user: user, id: task.id])
+        respond(Task.findWhere([user: user, id: task?.id])
                     .collect(serializeTask))
     }
 
