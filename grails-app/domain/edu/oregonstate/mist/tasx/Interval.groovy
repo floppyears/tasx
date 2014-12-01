@@ -94,7 +94,7 @@ class Interval {
      * @return true if both endpoints equal null
      */
     public Boolean isNull() {
-        return fromDate == null && toDate == null
+        return !fromDate && !toDate
     }
 
     /**
