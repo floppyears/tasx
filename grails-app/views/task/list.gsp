@@ -8,7 +8,7 @@
     <g:each var="task" in="${taskList}">
         <tr>
             <td>
-                ${formatStatus(task.status)}
+                <tasx:status status="${task.status}" />
             </td>
             <td>
                 <a href="/tasx/task/details/${task.id}">

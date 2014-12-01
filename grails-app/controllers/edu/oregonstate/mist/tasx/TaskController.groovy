@@ -55,8 +55,7 @@ class TaskController {
 
         List taskList = Task.findAllWhere([user: user])
 
-        return [ taskList: taskList,
-                 formatStatus: listFormatStatus ]
+        return [ taskList: taskList ]
     }
 
     private final String DATEFORMAT = "MM/dd/yyyy"
@@ -92,24 +91,5 @@ class TaskController {
                     return ""
                 }
         }
-    }
-
-    private Closure listFormatStatus = {
-        status ->
-            switch(status) {
-                case Task.Status.TODO:
-                    "todo:"
-                    break
-                case Task.Status.DONE:
-                    "done:"
-                    break
-                case Task.Status.CANCELLED:
-                    "canc:"
-                    break
-                case Task.Status.DELETED:
-                default:
-                    "dele:"
-                    break
-            }
     }
 }
