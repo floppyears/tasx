@@ -35,11 +35,8 @@ class TaskController {
             redirect([action: "details", id: task.id])
         } else {
             return [ params:       params,
-                     description:  task.description,
                      from:         task.schedule?.fromDate?.format(DATEFORMAT),
                      to:           task.schedule?.toDate?.format(DATEFORMAT),
-                     priority:     task.priority,
-                     id:           task.id
                      task:         task
             ]
         }

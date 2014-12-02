@@ -5,7 +5,7 @@
         <label for="description">
             ${g.message(code:"tasx.task.details.description")}
         </label>
-        <textarea name="description" id="description">${description}</textarea>
+        <textarea name="description" id="description">${task.description}</textarea>
     </div>
     <div>
         ${g.message(code:"tasx.task.details.schedule")}
@@ -26,12 +26,12 @@
         <label for="priority">
             ${g.message(code:"tasx.task.details.priority")}
         </label>
-        <input type="number" name="priority" id="priority" value="${priority}" />
+        <input type="number" name="priority" id="priority" value="${task.priority}" />
     </div>
     <div class="form-group">
         <tasx:status task="${task}" />
     </div>
-    <input type="hidden" name="id" value="${id}" />
+    <input type="hidden" name="id" value="${task.id}" />
     <input type="hidden" name="submitting" value="true" />
     <button type="submit" class="btn btn-default" name="submit">
         ${g.message(code:"tasx.task.details.submit")}
