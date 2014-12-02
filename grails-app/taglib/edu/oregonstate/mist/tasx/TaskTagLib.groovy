@@ -6,22 +6,32 @@ class TaskTagLib {
 
     static final namespace = "tasx"
 
-    def status = {
-        attributes, body ->
-            switch(attributes.status) {
-                case Task.Status.TODO:
-                    out << "&#x2610;"
-                    break
-                case Task.Status.DONE:
-                    out << "&#x2611;"
-                    break
-                case Task.Status.CANCELLED:
-                    out << "&#x2612;"
-                    break
-                case Task.Status.DELETED:
-                default:
-                    out << "*"
-                    break
-            }
+    def display = {
+        Map attributes, Closure body ->
+            out << "<a href='/tasx/task/details/"
+            out << attributes.task.getId()
+            out << "' class='task "
+            out << statusToCSSClass(attributes.task.status)
+            out << "'>"
+            out << attributes.task.descriptionSummary()
+            out << "</a>"
+    }
+
+    private static String statusToCSSClass(status) {
+        switch(status) {
+            case Task.Status.TODO:
+                "todo"
+                break
+            case Task.Status.DONE:
+                "done"
+                break
+            case Task.Status.CANCELLED:
+                "canc"
+                break
+            case Task.Status.DELETED:
+            default:
+                "dele"
+                break
+        }
     }
 }

@@ -1,23 +1,8 @@
 <g:render template="/header" model="[action:'task.list']" />
 
-<table>
-    <tr>
-        <th>${g.message(code:"tasx.task.list.status")}</th>
-        <th>${g.message(code:"tasx.task.list.task")}</th>
-    </tr>
-    <g:each var="task" in="${taskList}">
-        <tr>
-            <td>
-                <tasx:status status="${task.status}" />
-            </td>
-            <td>
-                <a href="/tasx/task/details/${task.id}">
-                    ${task.descriptionSummary()}
-                </a>
-            </td>
-        </tr>
-    </g:each>
-</table>
+<g:each var="task" in="${taskList}">
+    <tasx:display task="${task}" />
+</g:each>
 
 <a href="/tasx/task/details">
     ${g.message(code:"tasx.task.list.new")}
