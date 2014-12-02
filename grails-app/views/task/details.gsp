@@ -29,23 +29,7 @@
         <input type="number" name="priority" id="priority" value="${priority}" />
     </div>
     <div class="form-group">
-        <label for="status">
-            ${g.message(code:"tasx.task.details.status")}
-        </label>
-        <select name="status" id="status">
-            <option value="todo"${selectStatus("todo")}>
-                ${g.message(code:"tasx.task.details.todo")}
-            </option>
-            <option value="done"${selectStatus("done")}>
-                ${g.message(code:"tasx.task.details.done")}
-            </option>
-            <option value="canc"${selectStatus("canc")}>
-                ${g.message(code:"tasx.task.details.cancelled")}
-            </option>
-            <option value="dele"${selectStatus("dele")}>
-                ${g.message(code:"tasx.task.details.deleted")}
-            </option>
-        </select>
+        <tasx:status task="${task}" />
     </div>
     <input type="hidden" name="id" value="${id}" />
     <input type="hidden" name="submitting" value="true" />

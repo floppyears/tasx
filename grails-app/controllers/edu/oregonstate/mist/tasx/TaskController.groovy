@@ -35,12 +35,12 @@ class TaskController {
             redirect([action: "details", id: task.id])
         } else {
             return [ params:       params,
-                     selectStatus: detailsSelectStatus(task),
                      description:  task.description,
                      from:         task.schedule?.fromDate?.format(DATEFORMAT),
                      to:           task.schedule?.toDate?.format(DATEFORMAT),
                      priority:     task.priority,
                      id:           task.id
+                     task:         task
             ]
         }
     }
@@ -66,30 +66,16 @@ class TaskController {
 
     private static Task.Status stringToStatus(String statusString) {
         switch(statusString) {
-            case "done": return Task.Status.DONE
-            case "canc": return Task.Status.CANCELLED
-            case "dele": return Task.Status.DELETED
+            case "done":      return Task.Status.DONE
+            case "cancelled": return Task.Status.CANCELLED
+            case "deleted":   return Task.Status.DELETED
             case "todo":
-                default: return Task.Status.TODO
+                default:      return Task.Status.TODO
         }
     }
 
     private User getUserOrLogin() {
         return (User)session["user"] ?:
                redirect([controller: "user", action: "login"])
-    }
-
-    private static Closure detailsSelectStatus(Task task) {
-        return {
-            option ->
-                if ((option.equals("todo") && task.isIncomplete()) ||
-                    (option.equals("done") && task.isComplete())   ||
-                    (option.equals("canc") && task.isCancelled())  ||
-                    (option.equals("dele") && task.isDeleted())) {
-                    return " selected=selected"
-                } else {
-                    return ""
-                }
-        }
     }
 }
