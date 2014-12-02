@@ -11,28 +11,10 @@ class TaskTagLib {
             out << "<a href='/tasx/task/details/"
             out << attributes.task.getId()
             out << "' class='task "
-            out << statusToCSSClass(attributes.task.status)
+            out << attributes.task.statusString()
             out << "'>"
             out << attributes.task.descriptionSummary()
             out << "</a>"
-    }
-
-    private static String statusToCSSClass(status) {
-        switch(status) {
-            case Task.Status.TODO:
-                "todo"
-                break
-            case Task.Status.DONE:
-                "done"
-                break
-            case Task.Status.CANCELLED:
-                "canc"
-                break
-            case Task.Status.DELETED:
-            default:
-                "dele"
-                break
-        }
     }
 
     def status = {
@@ -44,7 +26,7 @@ class TaskTagLib {
             out << "\t\t"
             out << "<select name='status' id='status'>"
             out << "\n"
-            ["todo", "done", "cancelled", "deleted"].collect({
+            Task.statusStrings.collect({
                 status ->
                     out << "\t\t\t"
                     out << "<option value='"
@@ -61,10 +43,7 @@ class TaskTagLib {
     }
 
     private static String selectStatus(task, status) {
-        if ((status.equals("todo")      && task.isIncomplete()) ||
-            (status.equals("done"))     && task.isComplete()    ||
-            (status.equals("cancelled") && task.isCancelled())  ||
-            (status.equals("deleted")   && task.isDeleted())) {
+        if (task.statusString().equals(status)) {
             return " selected=selected"
         }
     }

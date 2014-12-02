@@ -47,6 +47,20 @@ class Task {
     public Boolean isCancelled()  { return status == Status.CANCELLED }
     public Boolean isDeleted()    { return status == Status.DELETED }
 
+    public static List statusStrings = [ "todo", "done", "cancelled", "deleted" ]
+
+    public String statusString() {
+        if (isIncomplete()) {
+            return statusStrings[0]
+        } else if (isComplete()) {
+            return statusStrings[1]
+        } else if (isCancelled()) {
+            return statusStrings[2]
+        } else if (isDeleted()) {
+            return statusStrings[3]
+        }
+    }
+
     public void setUnscheduled() {
         schedule.setNull()
     }
