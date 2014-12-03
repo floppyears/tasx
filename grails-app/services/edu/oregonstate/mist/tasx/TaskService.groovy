@@ -24,11 +24,14 @@ class TaskService {
         task.save([flush:true])
     }
 
-    Map detailsModel(task, params) {
-        return [ params: params,
-                 from:   task.schedule?.fromDate?.format(DATEFORMAT),
-                 to:     task.schedule?.toDate?.format(DATEFORMAT),
-                 task:   task ]
+    Map serializeTask(task) {
+        return [ id:          task.id,
+                 description: task.description,
+                 from:        task.schedule?.fromDate?.format(DATEFORMAT),
+                 to:          task.schedule?.toDate?.format(DATEFORMAT),
+                 priority:    task.priority,
+                 status:      task.status.toString()
+        ]
     }
 
     private Date stringToDate(String dateString) {
