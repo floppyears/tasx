@@ -21,6 +21,8 @@ class Interval {
      *
      * Time: -----|----->
      *
+     * This method is not named "setAt" for compatibility with GORM.
+     *
      * @param at any Date
      */
     public void doSetAt(Date at) {
@@ -63,7 +65,9 @@ class Interval {
     }
 
     /**
-     * Return the date of the instant defined by setAt(Date).
+     * Return the date of the instant defined by doSetAt(Date).
+     *
+     * This method is not named "getAt" for compatibility with GORM.
      *
      * @return either the lower bound or the upper bound
      */
@@ -90,7 +94,7 @@ class Interval {
      * @return true if both endpoints equal null
      */
     public Boolean isNull() {
-        return fromDate == null && toDate == null
+        return !fromDate && !toDate
     }
 
     /**

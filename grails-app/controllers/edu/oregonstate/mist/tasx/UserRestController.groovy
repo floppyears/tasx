@@ -24,7 +24,11 @@ class UserRestController {
      * @return       JSON response
      */
     def show(User user) {
-        respond(serializeUser(user))
+        if (user) {
+            respond(serializeUser(user))
+        } else {
+            respond([])
+        }
     }
 
     private Closure serializeUser = {
