@@ -8,7 +8,6 @@
         <textarea name="description" id="description">${description}</textarea>
     </div>
     <div>
-        ${g.message(code:"tasx.task.details.schedule")}
         <div class="form-group">
             <label for="from">
                 ${g.message(code:"tasx.task.details.from")}
