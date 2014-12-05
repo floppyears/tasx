@@ -1,9 +1,11 @@
 <g:render template="/header" model="[action: 'user.account']" />
 
-<table>
-    <tr><td>Name:</td><td>${user?.name}</td></tr>
-    <tr><td>Email:</td><td>${user?.email}</td></tr>
-</table>
+<dl>
+    <dt>${g.message(code:"tasx.user.account.name")}</dt>
+    <dd>${user?.name}</dd>
+    <dt>${g.message(code:"tasx.user.account.email")}</dt>
+    <dd>${user?.email}</dd>
+</dl>
 
 <a href="/tasx/task/list">
     ${g.message(code:"tasx.task.list.title")}
