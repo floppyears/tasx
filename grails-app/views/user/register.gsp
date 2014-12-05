@@ -1,4 +1,4 @@
-<g:render template="header" model="[action: 'register']" />
+<g:render template="/header" model="[action: 'user.register']" />
 
 <g:hasErrors bean="${user}">
     <div class="errors">
@@ -31,4 +31,4 @@
 <hr />
 <a href="/tasx/user/login">Login</a>
 
-<g:render template="footer" />
+<g:render template="/footer" />

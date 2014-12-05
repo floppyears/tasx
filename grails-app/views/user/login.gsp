@@ -1,4 +1,4 @@
-<g:render template="header" model="[action: 'login']" />
+<g:render template="/header" model="[action: 'user.login']" />
 
 
 <form action="/tasx/user/login" method="post" role="form">
@@ -17,4 +17,4 @@
 <hr />
 <a href="/tasx/user/register">Register</a>
 
-<g:render template="footer" />
+<g:render template="/footer" />

@@ -1,4 +1,4 @@
-<g:render template="header" model="[action: 'account']" />
+<g:render template="/header" model="[action: 'user.account']" />
 
 <table>
     <tr><td>Name:</td><td>${user?.name}</td></tr>
@@ -13,4 +13,4 @@
     ${g.message(code:"tasx.user.logout.title")}
 </a>
 
-<g:render template="footer" />
+<g:render template="/footer" />
