@@ -74,3 +74,16 @@ textarea {
     width: 30em;
     height: 10em;
 }
+
+nav a {
+    display: inline-block;
+}
+
+nav a:after {
+    padding: 0 0.5em;
+    content: "|"
+}
+
+nav a:last-child:after {
+    content: none;
+}

@@ -14,7 +14,5 @@
         ${g.message(code: 'tasx.user.login.submit')}
     </button>
 </form>
-<hr />
-<a href="/tasx/user/register">Register</a>
 
 <g:render template="/footer" />
