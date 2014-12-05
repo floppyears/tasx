@@ -7,6 +7,8 @@ class UserController {
     static scaffold = false
 
     Map register() {
+        redirectToAccountIfLoggedIn()
+
         User user = null
 
         if (params.submitting) {
@@ -25,6 +27,8 @@ class UserController {
     }
 
     Map login() {
+        redirectToAccountIfLoggedIn()
+
         User user = null
 
         if (params.name && params.password) {
@@ -50,5 +54,11 @@ class UserController {
         }
 
         return [user: session["user"]]
+    }
+
+    private void redirectToAccountIfLoggedIn() {
+        if (session["user"]) {
+            redirect(action: "account")
+        }
     }
 }
