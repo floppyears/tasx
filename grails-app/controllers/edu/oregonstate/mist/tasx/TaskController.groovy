@@ -23,7 +23,7 @@ class TaskController {
             taskService.update(task, user, params)
             redirect([action: "details", id: task.id])
         } else {
-            return [task:task] << taskService.serializeTask(task)
+            return [task:task] << task.serialize()
         }
     }
 

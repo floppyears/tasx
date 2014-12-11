@@ -110,6 +110,16 @@ class Task {
         return summary
     }
 
+    public Map serialize() {
+        return [ id:          id,
+                 description: description,
+                 from:        schedule?.fromDate?.format(DATEFORMAT),
+                 to:          schedule?.toDate?.format(DATEFORMAT),
+                 priority:    priority,
+                 status:      status.toString()
+        ]
+    }
+
     private static String readUntilNewline(String string) {
         return string.split("\n")[0]
     }

@@ -24,16 +24,6 @@ class TaskService {
         task.save([flush:true])
     }
 
-    Map serializeTask(task) {
-        return [ id:          task.id,
-                 description: task.description,
-                 from:        task.schedule?.fromDate?.format(DATEFORMAT),
-                 to:          task.schedule?.toDate?.format(DATEFORMAT),
-                 priority:    task.priority,
-                 status:      task.status.toString()
-        ]
-    }
-
     private Date stringToDate(String dateString) {
         return Date.parse(DATEFORMAT, dateString)
     }
