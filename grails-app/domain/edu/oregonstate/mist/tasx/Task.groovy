@@ -11,6 +11,8 @@ class Task {
         table "TasxTask"
     }
 
+    def grailsApplication
+
     static enum Status { TODO, DONE, CANCELLED, DELETED }
 
     String description
@@ -108,6 +110,18 @@ class Task {
         String summary = firstLine.substring(0, index)
 
         return summary
+    }
+
+    public Map serialize() {
+        String DATEFORMAT = grailsApplication.config.tasx.DATEFORMAT
+
+        return [ id:          id,
+                 description: description,
+                 from:        schedule?.fromDate?.format(DATEFORMAT),
+                 to:          schedule?.toDate?.format(DATEFORMAT),
+                 priority:    priority,
+                 status:      status.toString()
+        ]
     }
 
     private static String readUntilNewline(String string) {

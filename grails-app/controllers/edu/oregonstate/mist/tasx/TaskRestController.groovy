@@ -17,7 +17,7 @@ class TaskRestController {
         User user = User.get(params.userRestId)
 
         respond(Task.findAllWhere([user: user])
-                    .collect(taskService.&serializeTask))
+                    .collect({it.serialize()}))
     }
 
     /**
@@ -32,6 +32,6 @@ class TaskRestController {
         User user = User.get(params.userRestId)
 
         respond(Task.findWhere([user: user, id: task?.id])
-                    .collect(taskService.&serializeTask))
+                    .collect({it.serialize()}))
     }
 }

@@ -5,7 +5,7 @@ import grails.transaction.Transactional
 @Transactional
 class TaskService {
 
-    private final String DATEFORMAT = "MM/dd/yyyy"
+    def grailsApplication
 
     void update(task, user, params) {
         Date from = stringToDate(params.from)
@@ -24,17 +24,9 @@ class TaskService {
         task.save([flush:true])
     }
 
-    Map serializeTask(task) {
-        return [ id:          task.id,
-                 description: task.description,
-                 from:        task.schedule?.fromDate?.format(DATEFORMAT),
-                 to:          task.schedule?.toDate?.format(DATEFORMAT),
-                 priority:    task.priority,
-                 status:      task.status.toString()
-        ]
-    }
-
     private Date stringToDate(String dateString) {
+        String DATEFORMAT = grailsApplication.config.tasx.DATEFORMAT
+
         return Date.parse(DATEFORMAT, dateString)
     }
 
