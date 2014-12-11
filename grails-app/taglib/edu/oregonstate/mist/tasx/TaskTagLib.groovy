@@ -6,6 +6,17 @@ class TaskTagLib {
 
     static final namespace = "tasx"
 
+    /**
+     * Generate HTML to display a task in list.
+     *
+     * Usage:
+     * <tasx:display task="${task}" />
+     *
+     * @param attributes    [[task: someTask]]
+     * @param body          empty tag body
+     *
+     * @return              display formatted task
+     */
     def display = {
         Map attributes, Closure body ->
             out << "<a href='/tasx/task/details/"
@@ -17,6 +28,17 @@ class TaskTagLib {
             out << "</a>"
     }
 
+    /**
+     * Generate HTML to display a select element to get and set task status.
+     *
+     * Usage:
+     * <tasx:status task="${task}" />
+     *
+     * @param attributes    [[task: someTask]]
+     * @param body          empty tag body
+     *
+     * @return              display formatted task
+     */
     def status = {
         Map attributes, Closure body ->
             out << "<label for='status'>"
