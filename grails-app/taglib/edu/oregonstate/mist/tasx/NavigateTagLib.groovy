@@ -10,6 +10,10 @@ class NavigateTagLib {
         Map attributes, Closure body ->
             out << "<nav>"
             out << "\n"
+
+            outputLink([ url:     "/tasx/",
+                         message: "tasx.index.title" ])
+
             if (attributes.authenticated) {
                 [[ url:     "/tasx/user",
                    message: "tasx.user.account.title" ],
