@@ -11,6 +11,8 @@ class Task {
         table "TasxTask"
     }
 
+    def grailsApplication
+
     static enum Status { TODO, DONE, CANCELLED, DELETED }
 
     String description
@@ -111,6 +113,8 @@ class Task {
     }
 
     public Map serialize() {
+        String DATEFORMAT = grailsApplication.config.tasx.DATEFORMAT
+
         return [ id:          id,
                  description: description,
                  from:        schedule?.fromDate?.format(DATEFORMAT),
