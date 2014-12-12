@@ -12,7 +12,8 @@ class NavigateTagLib {
      * Usage:
      * <tasx:navigate authenticated="${(Boolean)session["user"]}" />
      *
-     * @param attributes    [[authenticated: trueOrFalse]]
+     * @param attributes    [[authenticated: boolean],
+     *                       [active:        action]]
      * @param body          empty tag body
      *
      * @return              formatted list of navigation links
@@ -31,19 +32,25 @@ class NavigateTagLib {
             out << "\t\t<ul class='nav navbar-nav'>\n"
 
             if (attributes.authenticated) {
-                outputLinks([[ url:     "/tasx/user",
-                               message: "tasx.user.account.title" ],
-                             [ url:     "/tasx/user/logout",
-                               message: "tasx.user.logout.title" ],
-                             [ url:     "/tasx/task/list",
-                               message: "tasx.task.list.title" ],
-                             [ url:     "/tasx/task/details",
-                               message: "tasx.task.list.new" ]])
+                outputLinks(
+                        activeLink(
+                                attributes.active,
+                                [[ url:     "/tasx/user",
+                                   action:  "user.account" ],
+                                 [ url:     "/tasx/user/logout",
+                                   action:  "user.logout" ],
+                                 [ url:     "/tasx/task/list",
+                                   action:  "task.list" ],
+                                 [ url:     "/tasx/task/details",
+                                   action:  "task.details" ]]))
             } else {
-                outputLinks([[ url:     "/tasx/user/login",
-                               message: "tasx.user.login.title" ],
-                             [ url:     "/tasx/user/register",
-                               message: "tasx.user.register.title" ]])
+                outputLinks(
+                        activeLink(
+                                attributes.active,
+                                [[ url:     "/tasx/user/login",
+                                   action:  "user.login" ],
+                                 [ url:     "/tasx/user/register",
+                                   action:  "user.register" ]]))
             }
 
             out << "\t\t</ul>\n"
@@ -51,17 +58,32 @@ class NavigateTagLib {
             out << "</nav>"
     }
 
-    private outputLinks(List urlsAndMessages) {
-        urlsAndMessages.collect(outputLink)
+    private static List activeLink(String action, List links) {
+        links.collect({
+            link ->
+                if (action == link.action) {
+                    link.active = true
+                }
+
+                return link
+        })
+    }
+
+    private outputLinks(List links) {
+        links.collect(outputLink)
     }
 
     private Closure outputLink = {
         Map link ->
-            out << "\t\t\t<li role='presentation'>"
+            out << "\t\t\t<li role='presentation'"
+            if (link.active) {
+                out << " class='active'"
+            }
+            out << ">"
             out << "<a href='"
             out << link.url
             out << "'>"
-            out << g.message(code:link.message)
+            out << g.message(code: "tasx." + link.action + ".title")
             out << "</a>"
             out << "</li>\n"
     }

@@ -9,6 +9,7 @@
 <body>
 <div class="container">
 
-<tasx:navigate authenticated="${(Boolean)session["user"]}" />
+<tasx:navigate authenticated="${(Boolean)session["user"]}"
+               active="${action}" />
 
 <h1>${g.message(code: "tasx." + action + ".title")}</h1>
