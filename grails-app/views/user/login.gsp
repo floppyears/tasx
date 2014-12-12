@@ -1,6 +1,5 @@
 <g:render template="/header" model="[action: 'user.login']" />
 
-
 <form action="/tasx/user/login" method="post" role="form">
     <div class="form-group">
         <label for="name">${g.message(code: "tasx.user.login.name")}</label>
