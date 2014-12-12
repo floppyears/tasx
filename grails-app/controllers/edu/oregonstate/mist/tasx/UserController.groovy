@@ -16,8 +16,7 @@ class UserController {
             user.setPassword(params.pass1, params.pass2)
 
             if (user.save()) {
-                session["user"] = user
-                redirect(action: "account")
+                redirectToAccount(user)
             }
         }
 
@@ -34,9 +33,8 @@ class UserController {
         if (params.name && params.password) {
             user = User.findByName(params.name)
 
-            if (user && user.passwordEquals(params.password)) {
-                session["user"] = user
-                redirect(action: "account")
+            if (user?.passwordEquals(params.password)) {
+                redirectToAccount(user)
             }
         }
 
@@ -60,5 +58,10 @@ class UserController {
         if (session["user"]) {
             redirect(action: "account")
         }
+    }
+
+    private void redirectToAccount(User user) {
+        session["user"] = user
+        redirect(action: "account")
     }
 }
