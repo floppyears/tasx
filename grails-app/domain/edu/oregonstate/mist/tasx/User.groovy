@@ -19,6 +19,10 @@ class User {
         passwordHash([nullable: true])
     }
 
+    static mapping = {
+        table "TasxUser"
+    }
+
     static hasMany = [tasks: Task]
 
     static transients = ["passwordTemp", "passwordConf"]

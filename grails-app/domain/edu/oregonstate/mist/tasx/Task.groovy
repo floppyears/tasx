@@ -7,12 +7,16 @@ class Task {
     static hasMany = [subTasks: Task]
     static belongsTo = [user: User]
 
-    private static enum Status { TODO, DONE, CANCELLED, DELETED }
+    static mapping = {
+        table "TasxTask"
+    }
+
+    static enum Status { TODO, DONE, CANCELLED, DELETED }
 
     String description
     Interval schedule
     Integer priority
-    private Status status
+    Status status
 
     public Task() {
         this("")
@@ -42,6 +46,20 @@ class Task {
     public Boolean isComplete()   { return status == Status.DONE }
     public Boolean isCancelled()  { return status == Status.CANCELLED }
     public Boolean isDeleted()    { return status == Status.DELETED }
+
+    public static List statusStrings = [ "todo", "done", "cancelled", "deleted" ]
+
+    public String statusString() {
+        if (isIncomplete()) {
+            return statusStrings[0]
+        } else if (isComplete()) {
+            return statusStrings[1]
+        } else if (isCancelled()) {
+            return statusStrings[2]
+        } else if (isDeleted()) {
+            return statusStrings[3]
+        }
+    }
 
     public void setUnscheduled() {
         schedule.setNull()
@@ -79,5 +97,20 @@ class Task {
      */
     public Boolean hasSubTasks() {
         return subTasks && !subTasks.isEmpty()
+    }
+
+    public String descriptionSummary() {
+        String firstLine = readUntilNewline(description)
+
+        Integer length = firstLine.length()
+        Integer max = 100
+        Integer index = (length < max) ? length : max
+        String summary = firstLine.substring(0, index)
+
+        return summary
+    }
+
+    private static String readUntilNewline(String string) {
+        return string.split("\n")[0]
     }
 }

@@ -39,6 +39,11 @@ class UserController {
         return [user: user]
     }
 
+    Map logout() {
+        session.invalidate()
+        redirect([action:"login"])
+    }
+
     Map account() {
         if (!session["user"]) {
             redirect(action: "login")

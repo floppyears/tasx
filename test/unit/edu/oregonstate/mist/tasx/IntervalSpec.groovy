@@ -28,14 +28,14 @@ class IntervalSpec extends Specification {
         when:
             interval = new Interval()
         then:
-            interval.getFrom() == null
-            interval.getTo() == null
+            interval.fromDate == null
+            interval.toDate == null
 
         when:
             interval = new Interval(FROM, TO)
         then:
-            interval.getFrom() == FROM
-            interval.getTo() == TO
+            interval.fromDate == FROM
+            interval.toDate == TO
     }
 
     void "interval contains date"() {
