@@ -42,7 +42,8 @@ class NavigateTagLib {
                                  [ url:     "/tasx/task/list",
                                    action:  "task.list" ],
                                  [ url:     "/tasx/task/details",
-                                   action:  "task.details" ]]))
+                                   action:  "task.details",
+                                   message: "tasx.task.list.new" ]]))
             } else {
                 outputLinks(
                         activeLink(
@@ -83,7 +84,8 @@ class NavigateTagLib {
             out << "<a href='"
             out << link.url
             out << "'>"
-            out << g.message(code: "tasx." + link.action + ".title")
+            out << g.message(code: link.message ?:
+                                   "tasx." + link.action + ".title")
             out << "</a>"
             out << "</li>\n"
     }
