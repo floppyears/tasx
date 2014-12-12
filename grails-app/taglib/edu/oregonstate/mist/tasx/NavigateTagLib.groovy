@@ -19,11 +19,16 @@ class NavigateTagLib {
      */
     def navigate = {
         Map attributes, Closure body ->
-            out << "<nav>"
-            out << "\n"
+            out << "<nav class='navbar navbar-default' role='navigation'>\n"
+            out << "\t<div class='container-fluid'>\n"
 
-            outputLink([ url:     "/tasx/",
-                         message: "tasx.index.title" ])
+            out << "\t\t<div class='navbar-header'>"
+            out << "<a href='/tasx/' class='navbar-brand'>"
+            out << g.message(code:"tasx.index.title")
+            out << "</a>"
+            out << "</div>\n"
+
+            out << "\t\t<ul class='nav navbar-nav'>\n"
 
             if (attributes.authenticated) {
                 outputLinks([[ url:     "/tasx/user",
@@ -41,6 +46,8 @@ class NavigateTagLib {
                                message: "tasx.user.register.title" ]])
             }
 
+            out << "\t\t</ul>\n"
+            out << "\t</div>\n"
             out << "</nav>"
     }
 
@@ -50,12 +57,12 @@ class NavigateTagLib {
 
     private Closure outputLink = {
         Map link ->
-            out << "\t"
+            out << "\t\t\t<li role='presentation'>"
             out << "<a href='"
             out << link.url
             out << "'>"
             out << g.message(code:link.message)
             out << "</a>"
-            out << "\n"
+            out << "</li>\n"
     }
 }
