@@ -91,3 +91,9 @@ nav a:after {
 nav a:last-child:after {
     content: none;
 }
+
+.message {
+    margin-bottom: 1em;
+    background-color: lightgreen;
+    padding: 0.5em;
+}
