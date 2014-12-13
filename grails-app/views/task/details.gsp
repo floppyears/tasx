@@ -8,18 +8,17 @@
         <textarea name="description" id="description">${description}</textarea>
     </div>
     <div>
-        ${g.message(code:"tasx.task.details.schedule")}
         <div class="form-group">
             <label for="from">
                 ${g.message(code:"tasx.task.details.from")}
             </label>
-            <input type="date" name="from" id="from" value="${from}" />
+            <input type="date" name="from" id="from" value="${from}" placeholder="${g.message(code:"tasx.task.details.dateformat")}" />
         </div>
         <div class="form-group">
             <label for="to">
                 ${g.message(code:"tasx.task.details.to")}
             </label>
-            <input type="date" name="to" id="to" value="${to}" />
+            <input type="date" name="to" id="to" value="${to}" placeholder="${g.message(code:"tasx.task.details.dateformat")}" />
         </div>
     </div>
     <div class="form-group">
@@ -37,9 +36,5 @@
         ${g.message(code:"tasx.task.details.submit")}
     </button>
 </form>
-
-<a href="/tasx/task/list">
-    ${g.message(code:"tasx.task.list.title")}
-</a>
 
 <g:render template="/footer" />

@@ -35,6 +35,13 @@ Tasks can be
  * listed, and
  * deleted.
 
+REST Interface
+--------------
+    $ curl -X GET -H "Accept:application/json" http://HOSTNAME/tasx/rest/user
+    $ curl -X GET -H "Accept:application/json" http://HOSTNAME/tasx/rest/user/USERID
+    $ curl -X GET -H "Accept:application/json" http://HOSTNAME/tasx/rest/user/USERID/task
+    $ curl -X GET -H "Accept:application/json" http://HOSTNAME/tasx/rest/user/USERID/task/TASKID
+
 Usage
 -----
     $ grails -version

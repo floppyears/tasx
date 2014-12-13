@@ -1,4 +1,4 @@
-<g:render template="header" model="[action: 'register']" />
+<g:render template="/header" model="[action: 'user.register']" />
 
 <g:hasErrors bean="${user}">
     <div class="errors">
@@ -28,7 +28,5 @@
         ${g.message(code: 'tasx.user.register.submit')}
     </button>
 </form>
-<hr />
-<a href="/tasx/user/login">Login</a>
 
-<g:render template="footer" />
+<g:render template="/footer" />

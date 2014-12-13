@@ -1,12 +1,35 @@
+body {
+    padding: 1em 0;
+}
+
 .task {
-    display:block;
     line-height: 2em;
+    display: block;
+    color: inherit;
+    padding: 0.25em;
+}
+
+.task:hover, .task:active {
+    color: inherit;
+    text-decoration: none;
+}
+
+.todo:hover, .todo:active {
+    background-color: lightcoral;
+}
+
+.cancelled:hover, .cancelled:active {
+    background-color: lightyellow;
+}
+
+.done:hover, .done:active {
+    background-color: lightgreen;
 }
 
 .todo:before, .cancelled:before, .done:before {
     padding-right: 0.25em;
-    font-size: 2em;
-    vertical-align: bottom;
+    font-size: 3em;
+    vertical-align: text-bottom;
 }
 
 .todo:before {
@@ -23,4 +46,48 @@
 
 .deleted {
     display: none;
+}
+
+label {
+    display: block;
+}
+
+dd + dt {
+    margin-top: 1em;
+}
+
+.errors {
+    border: 1px solid darkred;
+    background-color: lightcoral;
+    margin: 1em 0;
+    padding: 0.5em 0.5em 0;
+}
+
+.errors ul {
+    margin: 0;
+    padding-left: 1em;
+}
+
+.errors li {
+    margin: 0;
+    padding: 0 0 0.5em 0;
+}
+
+textarea {
+    max-width: 100%;
+    width: 30em;
+    height: 10em;
+}
+
+nav a {
+    display: inline-block;
+}
+
+nav a:after {
+    padding: 0 0.5em;
+    content: "|"
+}
+
+nav a:last-child:after {
+    content: none;
 }
