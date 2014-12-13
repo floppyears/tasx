@@ -85,6 +85,13 @@ class User {
         return digestString
     }
 
+    public Map serialize() {
+        return [ id:    id,
+                 name:  name,
+                 email: email,
+                 tasks: tasks ]
+    }
+
     private static String hash(String clearText) {
         return sha256sum(clearText)
     }

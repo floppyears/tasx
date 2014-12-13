@@ -12,7 +12,7 @@ class UserRestController {
      * @return       JSON response
      */
     def index() {
-        respond(User.findAll().collect(serializeUser))
+        respond(User.findAll().collect({it.serialize()}))
     }
 
     /**
@@ -25,21 +25,9 @@ class UserRestController {
      */
     def show(User user) {
         if (user) {
-            respond(serializeUser(user))
+            respond(user.serialize())
         } else {
             respond([])
         }
-    }
-
-    private Closure serializeUser = {
-        user ->
-            if (user) {
-                return [ id:    user.id,
-                         name:  user.name,
-                         email: user.email,
-                         tasks: user.tasks ]
-            } else {
-                return []
-            }
     }
 }
