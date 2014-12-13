@@ -59,6 +59,15 @@ class NavigateTagLib {
             out << "</nav>"
     }
 
+    /**
+     * Given an action and a list of links, return a list of links in which the
+     * corresponding link is marked active.
+     *
+     * @param action    action name
+     * @param links     list of links
+     *
+     * @return          the result list of links
+     */
     private static List activeLink(String action, List links) {
         links.collect({
             link ->
@@ -70,10 +79,19 @@ class NavigateTagLib {
         })
     }
 
-    private outputLinks(List links) {
+    /**
+     * Output each of the links in a list.
+     *
+     * @param links     list of links
+     */
+    private void outputLinks(List links) {
         links.collect(outputLink)
     }
 
+    /**
+     * Output a link as a list element and a hyperlink, marking it as active
+     * and using a custom message as needed.
+     */
     private Closure outputLink = {
         Map link ->
             out << "\t\t\t<li role='presentation'"
