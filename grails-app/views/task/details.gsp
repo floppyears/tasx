@@ -1,5 +1,9 @@
 <g:render template="/header" model="[action: 'task.details']" />
 
+<g:if test="${(flash.message)}">
+    <div class="message">${flash.message}</div>
+</g:if>
+
 <form action="/tasx/task/details/" method="post" role="form">
     <div class="form-group">
         <label for="description">

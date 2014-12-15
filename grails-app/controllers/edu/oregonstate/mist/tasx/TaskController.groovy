@@ -21,6 +21,7 @@ class TaskController {
 
         if (params.submitting) {
             taskService.update(task, user, params)
+            flash.message = g.message(code:"tasx.task.details.submitted")
             redirect([action: "details", id: task.id])
         } else {
             return [task:task] << task.serialize()
